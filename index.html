@@ -3,17 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blueberry | 1.21.x Master Hub</title>
+    <title>Blueberry | 1.21.x Dev Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            /* Erőteljes lila-kék átmenet */
             --bg-gradient: linear-gradient(135deg, #0d1117 0%, #1a1630 50%, #4c1d95 100%);
             --card-bg: rgba(26, 22, 48, 0.9);
             --accent-purple: #a78bfa;
-            --discord-blue: #5865F2;
+            --discord-color: #5865F2;
             --text-color: #e2e8f0;
             --code-bg: #000000;
-            --glow-strong: rgba(167, 139, 250, 0.6);
         }
 
         body {
@@ -22,107 +21,108 @@
             background-attachment: fixed;
             color: var(--text-color);
             margin: 0;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            padding: 40px 20px 100px 20px; /* Alul hely a Discord bárnak */
             min-height: 100vh;
             overflow-x: hidden;
         }
 
+        /* ASZIMMETRIKUS GRID ELRENDEZÉS */
         .container {
-            max-width: 1100px;
-            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            grid-gap: 25px;
+            grid-template-columns: repeat(4, 1fr);
+            grid-auto-rows: minmax(150px, auto);
+            grid-gap: 20px;
             z-index: 10;
+            position: relative;
         }
 
-        /* VILÁGÍTÓ ÉS KIEMELKEDŐ ABLAKOK */
         .card {
             background: var(--card-bg);
             border: 1px solid rgba(167, 139, 250, 0.2);
-            border-radius: 20px;
-            padding: 25px;
+            border-radius: 24px;
+            padding: 20px;
             backdrop-filter: blur(15px);
             transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
 
         .card:hover {
             border-color: var(--accent-purple);
-            box-shadow: 0 0 40px var(--glow-strong);
-            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 0 40px rgba(167, 139, 250, 0.5);
+            transform: translateY(-5px) scale(1.02);
         }
 
-        .hero { grid-column: span 2; display: flex; align-items: center; gap: 20px; }
-        .discord-card { background: rgba(88, 101, 242, 0.15); border: 1px solid var(--discord-blue); }
-        .full-width { grid-column: span 3; }
+        /* EGYEDI MÉRETEK ÉS POZÍCIÓK (NEM SZIMMETRIKUS) */
+        .hero { grid-column: span 3; grid-row: span 1; display: flex; align-items: center; gap: 20px; }
+        .commands-card { grid-column: span 2; grid-row: span 2; }
+        .info-1 { grid-column: span 1; transform: rotate(-1deg); }
+        .info-2 { grid-column: span 1; grid-row: span 2; transform: rotate(1.5deg); margin-top: 10px; }
+        .info-3 { grid-column: span 1; transform: rotate(-2deg); }
+        .about-card { grid-column: span 2; }
 
-        /* GÖRGETHETŐ PARANCS LISTA */
+        h1, h2, h3 { margin: 0 0 10px 0; color: #fff; text-shadow: 0 0 10px var(--accent-purple); }
+        p { color: #94a3b8; font-size: 0.95rem; line-height: 1.5; }
+
+        /* GÖRGETHETŐ LISTA */
         .command-list {
-            max-height: 400px;
+            max-height: 350px;
             overflow-y: auto;
-            padding-right: 15px;
             margin-top: 15px;
         }
-
-        .command-list::-webkit-scrollbar { width: 8px; }
-        .command-list::-webkit-scrollbar-thumb { background: var(--accent-purple); border-radius: 10px; }
-
         .command-box {
             background: var(--code-bg);
-            padding: 15px;
+            padding: 12px;
             border-radius: 12px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 12px;
-            border-left: 5px solid var(--accent-purple);
+            margin-bottom: 10px;
+            border-left: 4px solid var(--accent-purple);
         }
-
-        code { color: #5eead4; font-family: 'Courier New', monospace; font-size: 0.9rem; }
+        code { color: #5eead4; font-family: monospace; font-size: 0.8rem; overflow: hidden; }
 
         .copy-btn {
             background: var(--accent-purple);
-            border: none;
-            color: #000;
-            padding: 8px 16px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: 0.2s;
+            border: none; padding: 6px 10px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 0.7rem;
         }
-        .copy-btn:hover { background: #fff; transform: scale(1.05); }
 
-        /* KURZOR MELLETTI LEBEGŐ SZÖVEG */
-        .floating-text {
+        /* DISCORD FIXÁLT SÁV ALUL */
+        .footer-discord {
             position: fixed;
-            pointer-events: none;
-            color: var(--accent-purple);
-            font-family: monospace;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--discord-color);
+            padding: 12px 30px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+            color: white;
             font-weight: bold;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
             z-index: 1000;
-            text-shadow: 0 0 10px rgba(0,0,0,0.5);
-            animation: floatUp 2.5s ease-out forwards;
+            transition: 0.3s;
         }
-
-        @keyframes floatUp {
-            0% { transform: translate(0, 0); opacity: 1; }
-            100% { transform: translate(20px, -100px); opacity: 0; }
+        .footer-discord:hover {
+            transform: translateX(-50%) translateY(-5px);
+            box-shadow: 0 15px 40px rgba(88, 101, 242, 0.6);
+            background: #4752c4;
         }
+        .footer-discord i { font-size: 24px; }
 
-        /* RÉSZECSKÉK VÁSZNÁNAK BEÁLLÍTÁSA */
-        #particle-canvas {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            pointer-events: none;
-            z-index: 1;
+        /* RÉSZECSKÉK */
+        #particle-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
+        .floating-text { position: fixed; pointer-events: none; color: var(--accent-purple); font-weight: bold; z-index: 1000; animation: floatUp 2s forwards; }
+        @keyframes floatUp { 0% { opacity: 1; } 100% { transform: translateY(-100px); opacity: 0; } }
+
+        @media (max-width: 900px) {
+            .container { grid-template-columns: 1fr; }
+            .hero, .commands-card, .info-1, .info-2, .info-3, .about-card { grid-column: span 1; transform: none; }
         }
-
-        @media (max-width: 768px) { .container { grid-template-columns: 1fr; } .hero, .full-width { grid-column: span 1; } }
     </style>
 </head>
 <body>
@@ -131,66 +131,61 @@
 
     <div class="container">
         <div class="card hero">
-            <div style="font-size: 60px; filter: drop-shadow(0 0 10px var(--accent-purple));">🫐</div>
+            <div style="font-size: 60px;">🫐</div>
             <div>
-                <h1>Blueberry Master Hub</h1>
-                <p>Minecraft 1.21.x fejlesztés, YAML és Anime minden mennyiségben.</p>
+                <h1>Blueberry Dev Hub</h1>
+                <p>Minecraft 1.21.x szakértő, YAML mágus és Anime rajongó.</p>
             </div>
         </div>
 
-        <div class="card discord-card">
-            <h3>Elérhetőség 💬</h3>
-            <p>Itt tudsz elérni, ha kérdésed van:</p>
-            <strong style="color: #fff; font-size: 1.2rem; letter-spacing: 1px;">@gamingafonya_source</strong>
+        <div class="card info-1">
+            <h3>Minecraft 🧱</h3>
+            <p>A 1.21.x-ben az NBT-t felváltották a Data Componentek. Tanuld meg őket!</p>
         </div>
 
-        <div class="card">
-            <h3>Minecraft Tipp 🧱</h3>
-            <p>Az 1.21.x verziókban a `/attribute` parancs a legjobb barátod, ha egyedi bossokat akarsz készíteni!</p>
-        </div>
-        <div class="card">
-            <h3>Programozás 💻</h3>
-            <p>A YAML nem kód, hanem adat. De ha elrontod a behúzást, a pluginod úgy fog viselkedni, mint egy dühös Ender Dragon.</p>
-        </div>
-        <div class="card">
-            <h3>Anime ⛩️</h3>
-            <p>A "Blueberry" stílus lényege a lila esztétika, ami sok cyberpunk animében is visszaköszön.</p>
-        </div>
-
-        <div class="card full-width">
-            <h2>Minecraft 1.21.x Parancstár ⚔️</h2>
+        <div class="card commands-card">
+            <h2>1.21.x Parancsok ⚔️</h2>
             <div class="command-list">
                 <div class="command-box">
-                    <code>/give @p mace[enchantments={levels:{density:5,wind_burst:3}}] 1</code>
-                    <button class="copy-btn" onclick="copyTag('/give @p mace[enchantments={levels:{density:5,wind_burst:3}}] 1')">MÁSOLÁS</button>
+                    <code>/give @p mace[enchantments={levels:{density:5}}]</code>
+                    <button class="copy-btn" onclick="copyTag('/give @p mace[enchantments={levels:{density:5}}]')">MÁSOLÁS</button>
                 </div>
                 <div class="command-box">
-                    <code>/attribute @p minecraft:generic.scale base set 0.5</code>
-                    <button class="copy-btn" onclick="copyTag('/attribute @p minecraft:generic.scale base set 0.5')">MÁSOLÁS</button>
+                    <code>/attribute @p generic.scale base set 0.5</code>
+                    <button class="copy-btn" onclick="copyTag('/attribute @p generic.scale base set 0.5')">MÁSOLÁS</button>
                 </div>
                 <div class="command-box">
-                    <code>/summon wind_charge ~ ~3 ~ {ExplosionPower:3}</code>
-                    <button class="copy-btn" onclick="copyTag('/summon wind_charge ~ ~3 ~ {ExplosionPower:3}')">MÁSOLÁS</button>
+                    <code>/summon wind_charge ~ ~3 ~</code>
+                    <button class="copy-btn" onclick="copyTag('/summon wind_charge ~ ~3 ~')">MÁSOLÁS</button>
                 </div>
                 <div class="command-box">
-                    <code>/particle minecraft:trial_spawner_detection ~ ~1 ~ 1 1 1 0.1 500</code>
-                    <button class="copy-btn" onclick="copyTag('/particle minecraft:trial_spawner_detection ~ ~1 ~ 1 1 1 0.1 500')">MÁSOLÁS</button>
-                </div>
-                <div class="command-box">
-                    <code>/execute at @e[type=arrow] run summon lightning_bolt ~ ~ ~</code>
-                    <button class="copy-btn" onclick="copyTag('/execute at @e[type=arrow] run summon lightning_bolt ~ ~ ~')">MÁSOLÁS</button>
-                </div>
-                <div class="command-box">
-                    <code>/give @p crafter 64</code>
-                    <button class="copy-btn" onclick="copyTag('/give @p crafter 64')">MÁSOLÁS</button>
-                </div>
-                <div class="command-box">
-                    <code>/summon bogged ~ ~ ~</code>
-                    <button class="copy-btn" onclick="copyTag('/summon bogged ~ ~ ~')">MÁSOLÁS</button>
+                    <code>/execute at @e[type=arrow] run lightning</code>
+                    <button class="copy-btn" onclick="copyTag('/execute at @e[type=arrow] run lightning')">MÁSOLÁS</button>
                 </div>
             </div>
         </div>
+
+        <div class="card info-2">
+            <h3>YAML Tipp 💻</h3>
+            <p>Mindig 2 szóköz a behúzás! Se több, se kevesebb. A TAB a legnagyobb ellenséged a config fájlokban.</p>
+            <p style="margin-top: 15px;">Kedvenc pluginjaim: Skript, LuckPerms, EssentialsX.</p>
+        </div>
+
+        <div class="card about-card">
+            <h3>Rólam 👤</h3>
+            <p>Egy digitális áfonya vagyok, aki imádja a kódokat. Ha épp nem konfigurálok valamit, akkor valószínűleg animét nézek vagy a Discord szerveremen segítek másoknak.</p>
+        </div>
+
+        <div class="card info-3">
+            <h3>Anime ⛩️</h3>
+            <p>Jelenlegi kedvenc: <em>Solo Leveling</em>. A lila aura az inspirációm!</p>
+        </div>
     </div>
+
+    <a href="https://discord.gg/jS4ajf4JHy" target="_blank" class="footer-discord">
+        <i class="fab fa-discord"></i>
+        <span>CSATLAKOZZ A DISCORD SZERVEREMHEZ!</span>
+    </a>
 
     <script>
         let mouse = { x: 0, y: 0 };
@@ -198,21 +193,16 @@
         const ctx = canvas.getContext('2d');
         let particles = [];
 
-        // Kurzór követése
         window.addEventListener('mousemove', e => { 
-            mouse.x = e.clientX; 
-            mouse.y = e.clientY; 
+            mouse.x = e.clientX; mouse.y = e.clientY; 
             for(let i=0; i<2; i++) particles.push(new P()); 
         });
 
-        // Másolás és poén felbukkanása
         function copyTag(text) {
             navigator.clipboard.writeText(text);
-            spawnFloatingText("Másolva! 🫐");
+            spawnFloatingText("Kód másolva! 🫐");
         }
 
-        const jokes = ["YAML Error!", "127.0.0.1", "Anime > Real Life", "Blueberry Power", "Mace OP!", "1.21 is here!", "Kódolás...", ":3"];
-        
         function spawnFloatingText(text) {
             const el = document.createElement('div');
             el.className = 'floating-text';
@@ -220,13 +210,8 @@
             el.style.left = mouse.x + 'px';
             el.style.top = mouse.y + 'px';
             document.body.appendChild(el);
-            setTimeout(() => el.remove(), 2500);
+            setTimeout(() => el.remove(), 2000);
         }
-
-        // Véletlenszerű poénok a kurzornál
-        setInterval(() => {
-            if(Math.random() > 0.7) spawnFloatingText(jokes[Math.floor(Math.random()*jokes.length)]);
-        }, 3000);
 
         // Particle rendszer
         window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
@@ -239,7 +224,7 @@
                 this.vX = Math.random() * 2 - 1; this.vY = Math.random() * 2 - 1;
                 this.c = `rgba(167, 139, 250, ${Math.random()})`;
             }
-            u() { this.x += this.vX; this.y += this.vY; if(this.s > 0.1) this.s -= 0.05; }
+            u() { this.x += this.vX; this.y += this.vY; this.s -= 0.05; }
             d() { ctx.fillStyle = this.c; ctx.beginPath(); ctx.arc(this.x, this.y, this.s, 0, Math.PI*2); ctx.fill(); }
         }
 
@@ -247,7 +232,7 @@
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             for (let i = 0; i < particles.length; i++) {
                 particles[i].u(); particles[i].d();
-                if (particles[i].s <= 0.1) { particles.splice(i, 1); i--; }
+                if (particles[i].s <= 0) { particles.splice(i, 1); i--; }
             }
             requestAnimationFrame(anim);
         }

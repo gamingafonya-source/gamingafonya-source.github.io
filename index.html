@@ -7,11 +7,12 @@
     <style>
         :root {
             /* Kék-lila átmenet színei */
-            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #4c1d95 100%);
-            --card-bg: rgba(26, 22, 48, 0.9);
-            --accent-purple: #a78bfa;
+            --bg-gradient: linear-gradient(135deg, #0d1117 0%, #161a2c 50%, #3e1b7a 100%);
+            --card-bg: rgba(26, 22, 48, 0.85);
+            --accent-purple: #a78bfa; /* Fényesebb lila */
             --text-color: #e2e8f0;
             --code-bg: #000000;
+            --glow-color: rgba(167, 139, 250, 0.5); /* A világítás színe */
         }
 
         body {
@@ -24,6 +25,8 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden; /* A részecskék miatt kell */
         }
 
         .container {
@@ -31,58 +34,102 @@
             width: 100%;
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            grid-gap: 20px;
+            grid-gap: 25px;
+            z-index: 10; /* A kártyák a részecskék felett legyenek */
         }
 
+        /* Alap kártya stílus */
         .card {
             background: var(--card-bg);
-            border: 1px solid rgba(167, 139, 250, 0.2);
+            border: 1px solid rgba(167, 139, 250, 0.1);
             border-radius: 20px;
             padding: 25px;
-            backdrop-filter: blur(10px);
-            transition: 0.3s;
+            backdrop-filter: blur(12px);
+            transition: 0.4s ease-out; /* Simább átmenet */
+            position: relative;
         }
 
-        .card:hover { border-color: var(--accent-purple); transform: translateY(-5px); }
+        /* 💡 VILÁGÍTÓ EFFEKT RÁVITT EGÉRNÉL */
+        .card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: var(--accent-purple);
+            box-shadow: 0 10px 30px var(--glow-color); /* Lila ragyogás */
+        }
 
         .hero { grid-column: span 2; display: flex; align-items: center; gap: 20px; }
         .full-width { grid-column: span 3; }
 
-        /* Parancs szekció */
-        .command-box {
-            background: var(--code-bg);
-            padding: 15px;
-            border-radius: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-            border-left: 4px solid var(--accent-purple);
-        }
-
-        code { color: #5eead4; font-family: 'Courier New', monospace; }
-
-        .copy-btn {
-            background: var(--accent-purple);
-            border: none;
-            color: #000;
-            padding: 5px 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 0.8rem;
-        }
-
-        .copy-btn:active { transform: scale(0.95); }
+        h1, h3 { margin: 0; color: #fff; text-shadow: 0 0 10px rgba(167, 139, 250, 0.3); }
+        p { color: #94a3b8; line-height: 1.6; }
 
         .tag {
             display: inline-block;
             background: rgba(167, 139, 250, 0.1);
             color: var(--accent-purple);
-            padding: 5px 12px;
-            border-radius: 10px;
-            margin: 4px;
+            padding: 6px 14px;
+            border-radius: 12px;
+            margin: 5px;
+            font-size: 0.9rem;
+            border: 1px solid rgba(167, 139, 250, 0.2);
+            transition: 0.2s;
+        }
+        .tag:hover { background: rgba(167, 139, 250, 0.2); }
+
+        /* Parancs szekció */
+        .command-box {
+            background: var(--code-bg);
+            padding: 15px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            border-left: 4px solid var(--accent-purple);
+            box-shadow: inset 0 0 10px rgba(167, 139, 250, 0.1);
+        }
+
+        code { color: #5eead4; font-family: 'Courier New', monospace; font-size: 0.95rem; }
+
+        .copy-btn {
+            background: var(--accent-purple);
+            border: none;
+            color: #111;
+            padding: 6px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
             font-size: 0.85rem;
+            transition: 0.2s;
+        }
+        .copy-btn:hover { background: #fff; }
+        .copy-btn:active { transform: scale(0.9); }
+
+        /* 🎨 PARTICLE CANVAS (Ez kell a kurzor effektnek) */
+        #particle-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none; /* Ne zavarja az kattintást */
+            z-index: 1;
+        }
+
+        /* 😂 POÉN SZÖVEG */
+        #joke-box {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            color: #5eead4;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-family: monospace;
+            font-size: 0.9rem;
+            opacity: 0; /* Alapból láthatatlan */
+            transition: opacity 1s, transform 0.5s;
+            pointer-events: none;
+            z-index: 100;
         }
 
         @media (max-width: 768px) { .container { grid-template-columns: 1fr; } .hero, .full-width { grid-column: span 1; } }
@@ -90,49 +137,146 @@
 </head>
 <body>
 
+    <canvas id="particle-canvas"></canvas>
+
+    <div id="joke-box"></div>
+
     <div class="container">
         <div class="card hero">
-            <div style="font-size: 50px;">🫐</div>
+            <div style="font-size: 60px; filter: drop-shadow(0 0 10px rgba(167, 139, 250, 0.5));">🫐</div>
             <div>
                 <h1>Blueberry Dev</h1>
-                <p>Minecraft 1.21.1 kódok és konfigurációk.</p>
+                <p>Minecraft 1.21.1+ kódok, konfigurációk és YAML masterclass.</p>
             </div>
         </div>
 
         <div class="card">
             <h3>Tudásom 🛠️</h3>
-            <div class="tag">YAML</div>
+            <div class="tag">YAML & Config</div>
             <div class="tag">Skript</div>
+            <div class="tag">Server Optimization</div>
             <div class="tag">Paper/Purpur</div>
         </div>
 
         <div class="card full-width">
-            <h3>Látványos 1.21.1 Commandok ⚔️</h3>
-            <p>Kattints a gombra a másoláshoz!</p>
+            <h3>Látványos 1.21 Commandok ⚔️</h3>
+            <p>Kattints a gombra a gyors másoláshoz!</p>
 
             <div class="command-box">
-                <code>/summon lightning_bolt ~ ~ ~</code>
-                <button class="copy-btn" onclick="copyTag('/summon lightning_bolt ~ ~ ~')">MÁSOLÁS</button>
+                <code>/summon arrow ~ ~ ~ {item:{id:"minecraft:tnt"}}</code>
+                <button class="copy-btn" onclick="copyTag('/summon arrow ~ ~ ~ {item:{id:\'minecraft:tnt\'}}')">MÁSOLÁS</button>
+            </div>
+
+            <div class="command-box">
+                <code>/particle minecraft:cherry_leaves ~ ~2 ~ 1 1 1 0.1 100</code>
+                <button class="copy-btn" onclick="copyTag('/particle minecraft:cherry_leaves ~ ~2 ~ 1 1 1 0.1 100')">MÁSOLÁS</button>
             </div>
 
             <div class="command-box">
                 <code>/give @p netherite_sword[enchantments={levels:{sharpness:255}}]</code>
                 <button class="copy-btn" onclick="copyTag('/give @p netherite_sword[enchantments={levels:{sharpness:255}}]')">MÁSOLÁS</button>
             </div>
-
-            <div class="command-box">
-                <code>/particle minecraft:explosion_emitter ~ ~1 ~ 0 0 0 0.1 10</code>
-                <button class="copy-btn" onclick="copyTag('/particle minecraft:explosion_emitter ~ ~1 ~ 0 0 0 0.1 10')">MÁSOLÁS</button>
-            </div>
         </div>
     </div>
 
     <script>
+        // --- 1. Másolás funkció ---
         function copyTag(text) {
             navigator.clipboard.writeText(text);
-            alert("Másolva: " + text);
+            const jokeBox = document.getElementById('joke-box');
+            jokeBox.innerText = "Másolva: " + text.substring(0, 20) + "...";
+            jokeBox.style.opacity = 1;
+            setTimeout(() => { jokeBox.style.opacity = 0; }, 2000);
         }
-    </script>
 
+        // --- 2. Programozói Poénok ---
+        const jokes = [
+            "Hány programozó kell egy villanykörte kicseréléséhez? Semennyi, ez hardveres probléma.",
+            "Mi a programozók kedvenc zenéje? A 'There is no place like 127.0.0.1'.",
+            "YAML hiba a 4. sorban. Megjavítod? Nem, inkább újrakezdem.",
+            "Egy SQL lekérdezés besétál egy bárba, odamegy két asztalhoz, és megkérdezi: 'Csatlakozhatok?'",
+            "A kódom működik, és nem tudom miért.",
+            "Egy YAML config fájlban a behúzás az élet és halál kérdése."
+        ];
+
+        function showRandomJoke() {
+            const jokeBox = document.getElementById('joke-box');
+            if (jokeBox.style.opacity == 0) { // Ne zavarja a másolás üzenetet
+                jokeBox.innerText = jokes[Math.floor(Math.random() * jokes.length)];
+                jokeBox.style.opacity = 0.6; // Halványan bukkan fel
+                jokeBox.style.transform = "translateY(-10px)";
+                setTimeout(() => { 
+                    jokeBox.style.opacity = 0; 
+                    jokeBox.style.transform = "translateY(0px)";
+                }, 4000); // 4 másodpercig marad
+            }
+        }
+
+        // Poénok felbukkanása 15-30 másodpercenként
+        setInterval(showRandomJoke, Math.random() * (30000 - 15000) + 15000);
+
+        // --- 3. Kurzor Részecske Effekt ---
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let particles = [];
+        const mouse = { x: null, y: null };
+
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = e.x;
+            mouse.y = e.y;
+            for (let i = 0; i < 2; i++) { // Minden mozdulatnál 2 részecske
+                particles.push(new Particle());
+            }
+        });
+
+        class Particle {
+            constructor() {
+                this.x = mouse.x;
+                this.y = mouse.y;
+                this.size = Math.random() * 4 + 1; // 1-5px méret
+                this.speedX = Math.random() * 2 - 1; // -1 és 1 közötti sebesség
+                this.speedY = Math.random() * 2 - 1;
+                this.color = `rgba(167, 139, 250, ${Math.random()})`; // Lila, random átlátszósággal
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.size > 0.2) this.size -= 0.05; // Lassan eltűnik
+            }
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function handleParticles() {
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+                if (particles[i].size <= 0.2) {
+                    particles.splice(i, 1);
+                    i--;
+                }
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            handleParticles();
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+    </script>
 </body>
 </html>

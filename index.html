@@ -3,290 +3,286 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ÁfonyaSMP | Hub 1.21.11</title>
+    <title>ÁfonyaSMP | 1.21.11 Ultimate Hub</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            --bg-gradient: linear-gradient(135deg, #020617 0%, #0f172a 50%, #1e1b4b 100%);
-            --card-bg: rgba(7, 10, 25, 0.95);
-            --solo-blue: #38bdf8;
-            --pink-glow: #ff79c6;
-            --bronze: #cd7f32;
+            --bg: #020617;
+            --card-bg: rgba(7, 10, 25, 0.98);
+            --neon-blue: #38bdf8;
+            --neon-green: #22c55e;
+            --neon-pink: #ff79c6;
             --gold: #fbbf24;
+            --bronze: #cd7f32;
             --saphire: #0ea5e9;
-            --neon: #22c55e;
-            --text-color: #f1f5f9;
+            --purple: #a78bfa;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: var(--bg-gradient);
-            background-attachment: fixed;
-            color: var(--text-color);
+            background: var(--bg);
+            background-image: radial-gradient(circle at 50% 50%, #1e1b4b 0%, #020617 100%);
+            color: white;
+            font-family: 'Segoe UI', sans-serif;
             margin: 0;
-            padding: 80px 20px 150px 20px;
             min-height: 100vh;
-            overflow-x: hidden;
+            padding-bottom: 100px;
         }
 
-        /* RÉSZECSKÉK - Mindig legfelül */
-        canvas#particle-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 10005; }
+        canvas#particle-canvas { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 10005; }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            grid-gap: 25px;
+        /* --- AUTH SCREEN --- */
+        #auth-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg); z-index: 20000;
+            display: flex; justify-content: center; align-items: center;
+        }
+        .auth-card {
+            background: var(--card-bg); border: 3px solid var(--neon-pink);
+            box-shadow: 0 0 40px var(--neon-pink); padding: 40px; border-radius: 30px;
+            text-align: center; width: 350px;
         }
 
-        /* FIX PÉNZ PANEL */
+        /* --- UI ELEMEK --- */
+        .container { max-width: 1200px; margin: 100px auto 0; padding: 20px; position: relative; z-index: 10; }
+        
+        .card {
+            background: var(--card-bg); border-radius: 20px; padding: 25px;
+            margin-bottom: 25px; border: 2px solid var(--neon-blue);
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
+            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 0 30px var(--neon-blue); }
+
         .balance-panel {
             position: fixed; top: 20px; right: 20px;
-            background: var(--card-bg);
-            border: 2px solid var(--neon);
-            box-shadow: 0 0 20px var(--neon), inset 0 0 10px var(--neon);
-            padding: 12px 25px;
-            border-radius: 15px;
-            z-index: 10001;
-            font-weight: bold;
-            display: flex; align-items: center; gap: 10px;
-            animation: pulse-neon 2s infinite;
+            background: var(--card-bg); border: 2px solid var(--neon-green);
+            box-shadow: 0 0 20px var(--neon-green);
+            padding: 15px 30px; border-radius: 50px; z-index: 10001;
+            font-weight: bold; font-family: 'Courier New', monospace; font-size: 1.2rem;
         }
 
-        @keyframes pulse-neon { 0%, 100% { box-shadow: 0 0 15px var(--neon); } 50% { box-shadow: 0 0 30px var(--neon); } }
+        /* --- RANGOK GRID --- */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+        .shop-item { text-align: center; border-width: 3px; }
+        
+        .bronz { border-color: var(--bronze); box-shadow: 0 0 20px var(--bronze); }
+        .gold { border-color: var(--gold); box-shadow: 0 0 20px var(--gold); }
+        .saphire { border-color: var(--saphire); box-shadow: 0 0 20px var(--saphire); }
+        .neon { border-color: var(--neon-pink); box-shadow: 0 0 20px var(--neon-pink); }
 
-        /* NEON ABLAKOK ALAPVILÁGÍTÁSSAL */
-        .card {
-            background: var(--card-bg);
-            border-radius: 24px;
-            padding: 25px;
-            backdrop-filter: blur(20px);
-            border: 2px solid var(--solo-blue);
-            box-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
-            transition: 0.4s ease;
-        }
-        .card:hover { transform: scale(1.02); box-shadow: 0 0 40px var(--solo-blue); }
-
-        .hero { grid-column: span 3; border-color: var(--solo-blue); }
-        .info-card { grid-column: span 1; border-color: var(--pink-glow); box-shadow: 0 0 15px var(--pink-glow); }
-        .commands-card { grid-column: span 4; border-color: var(--accent-purple); }
-        .shop-card { grid-column: span 4; }
-
-        /* RANGOK */
-        .shop-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); grid-gap: 20px; margin-top: 30px; }
-        .shop-item { 
-            background: #000; border-radius: 20px; padding: 25px; text-align: center;
-            border: 3px solid transparent; transition: 0.3s;
-        }
-        .bronz-glow { border-color: var(--bronze); box-shadow: 0 0 20px var(--bronze); }
-        .gold-glow { border-color: var(--gold); box-shadow: 0 0 20px var(--gold); }
-        .saphire-glow { border-color: var(--saphire); box-shadow: 0 0 20px var(--saphire); }
-        .neon-glow { border-color: var(--neon); box-shadow: 0 0 20px var(--neon); }
-
-        .price { font-size: 1.8rem; font-weight: bold; margin: 15px 0; font-family: 'Courier New', monospace; }
-        input { width: 85%; padding: 12px; margin-bottom: 15px; border-radius: 10px; border: 1px solid #334155; background: #0f172a; color: white; text-align: center; }
-
-        /* MODAL */
-        #customModal {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95); z-index: 10010; align-items: center; justify-content: center;
-        }
-        .modal-content {
-            background: var(--card-bg); border: 3px solid var(--solo-blue);
-            padding: 40px; border-radius: 30px; text-align: center; max-width: 450px;
-            box-shadow: 0 0 60px var(--solo-blue);
+        .price { font-size: 2rem; font-weight: bold; margin: 15px 0; display: block; }
+        
+        input {
+            width: 85%; padding: 12px; margin: 10px 0; border-radius: 10px;
+            border: 1px solid #334155; background: #0f172a; color: white; text-align: center;
         }
 
-        /* GOMBOK */
-        .modal-btn {
-            background: var(--solo-blue); border: none; padding: 12px 30px; 
-            border-radius: 12px; color: white; font-weight: bold; cursor: pointer; transition: 0.3s;
+        .btn {
+            width: 100%; padding: 15px; border: none; border-radius: 12px;
+            cursor: pointer; font-weight: bold; font-size: 1rem; transition: 0.3s;
         }
-        .modal-btn:hover { background: white; color: black; box-shadow: 0 0 20px white; }
+        .btn-buy { background: var(--neon-blue); color: black; }
+        .btn-buy:hover { filter: brightness(1.2); box-shadow: 0 0 20px white; }
 
-        .footer-discord {
-            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
-            background: #5865F2; padding: 15px 45px; border-radius: 50px;
-            color: white; text-decoration: none; font-weight: bold; z-index: 10001;
-            box-shadow: 0 0 20px #5865F2; transition: 0.4s;
-        }
-
-        /* COMMAND STÍLUS */
-        .cmd-box { background: #050814; border-left: 4px solid var(--solo-blue); padding: 15px; margin: 10px 0; border-radius: 8px; }
-        code { color: #5eead4; }
-
+        /* --- EGYÉB --- */
+        code { background: #000; color: #5eead4; padding: 4px 8px; border-radius: 5px; }
+        .hidden { display: none !important; }
+        
         .floating-joke {
-            position: fixed; pointer-events: none; color: var(--pink-glow); font-weight: bold;
-            font-size: 1.2rem; z-index: 10006; animation: floatUp 3s forwards; text-shadow: 0 0 10px black;
+            position: fixed; pointer-events: none; color: var(--neon-pink); font-weight: bold;
+            z-index: 10006; animation: floatUp 3s forwards; text-shadow: 0 0 10px #000;
         }
-        @keyframes floatUp { 0% { transform: translateY(0) opacity(0); } 10% { opacity: 1; } 100% { transform: translateY(-150px); opacity: 0; } }
+        @keyframes floatUp { 0% { transform: translateY(0); opacity: 0; } 20% { opacity: 1; } 100% { transform: translateY(-100px); opacity: 0; } }
     </style>
 </head>
 <body>
 
     <canvas id="particle-canvas"></canvas>
 
-    <div class="balance-panel">
-        <i class="fas fa-coins"></i> EGYENLEG: 350,000 $
-    </div>
-
-    <div id="customModal">
-        <div class="modal-content">
-            <h2 id="modalTitle" style="color: var(--solo-blue);">SYSTEM</h2>
-            <p id="modalMsg"></p>
-            <button class="modal-btn" onclick="closeModal()">OKÉZOM</button>
+    <div id="auth-screen">
+        <div class="auth-card">
+            <h2 style="color: var(--neon-pink); margin-top: 0;">ÁfonyaSMP 1.21.11</h2>
+            <p>Lépj be a karaktereddel!</p>
+            <input type="text" id="username" placeholder="Minecraft Felhasználónév">
+            <input type="password" id="password" placeholder="Jelszó">
+            <button class="btn btn-buy" onclick="handleAuth()">BELÉPÉS / REGISZTRÁCIÓ</button>
+            <p style="font-size: 0.7rem; color: #64748b; margin-top: 20px;">Adatok mentése a böngészőben történik.</p>
         </div>
     </div>
 
-    <div class="container">
-        <div class="card hero">
-            <h1>ÁfonyaSMP <span style="color: var(--pink-glow);">v1.21.11</span></h1>
-            <p>Üdvözlünk a legújabb frissítésben! IP: <b>AfonyaSMP.aternos.me</b></p>
-        </div>
-
-        <div class="card info-card">
-            <h3>Szerver Állapot</h3>
-            <p>Verzió: 1.21.11 ✅<br>Whitelist: Nincs</p>
-        </div>
-
-        <div class="card commands-card">
-            <h2>Mester Parancsok (1.21.11 Special) ⚔️</h2>
-            <div class="cmd-box">
-                <code>/give @p minecraft:crafter[can_break={blocks:["minecraft:obsidian"]}]</code>
-                <p>Auto-Crafter lehívása speciális tulajdonságokkal.</p>
-            </div>
-            <div class="cmd-box" style="border-color: var(--neon);">
-                <code>/execute in minecraft:overworld run tp @s 100 64 100</code>
-                <p>Gyors teleportáció a spawn koordinátákra.</p>
-            </div>
-            <div class="cmd-box" style="border-color: var(--pink-glow);">
-                <code>/particle minecraft:trial_spawner_detection_ominous ~ ~1 ~ 1 1 1 0.1 100</code>
-                <p>Ominous részecske aura idézése.</p>
-            </div>
-        </div>
-
-        <div class="card shop-card">
-            <h2 style="text-align: center;">Rangok Boltja</h2>
-            <div class="shop-grid">
-                <div class="shop-item bronz-glow">
-                    <h3 style="color: var(--bronze);">BRONZ</h3>
-                    <div class="price">15,000 $</div>
-                    <input type="text" id="in-bronz" placeholder="MC Neved">
-                    <button class="modal-btn" style="background: var(--bronze); width: 100%;" onclick="buy('BRONZ', 'in-bronz')">IGÉNYLÉS</button>
-                </div>
-
-                <div class="shop-item gold-glow">
-                    <h3 style="color: var(--gold);">GOLD</h3>
-                    <div class="price">45,000 $</div>
-                    <input type="text" id="in-gold" placeholder="MC Neved">
-                    <button class="modal-btn" style="background: var(--gold); width: 100%; color: black;" onclick="buy('GOLD', 'in-gold')">IGÉNYLÉS</button>
-                </div>
-
-                <div class="shop-item saphire-glow">
-                    <h3 style="color: var(--saphire);">SAPHIRE</h3>
-                    <div class="price">120,000 $</div>
-                    <input type="text" id="in-saphire" placeholder="MC Neved">
-                    <button class="modal-btn" style="background: var(--saphire); width: 100%;" onclick="buy('SAPHIRE', 'in-saphire')">IGÉNYLÉS</button>
-                </div>
-
-                <div class="shop-item neon-glow">
-                    <h3 style="color: var(--neon);">NEON</h3>
-                    <div class="price">350,000 $</div>
-                    <input type="text" id="in-neon" placeholder="MC Neved">
-                    <button class="modal-btn" style="background: var(--neon); width: 100%; color: black;" onclick="buy('NEON', 'in-neon')">IGÉNYLÉS</button>
-                </div>
-            </div>
-        </div>
+    <div id="money-ui" class="balance-panel hidden">
+        💰 <span id="user-name"></span>: <span id="user-money" style="color: var(--neon-green);">0</span> $
     </div>
 
-    <a href="https://discord.gg/jS4ajf4JHy" target="_blank" class="footer-discord" id="discordBtn">
-        <i class="fab fa-discord"></i> CSATLAKOZZ A DISCORDHOZ
-    </a>
+    <div id="main-content" class="container hidden">
+        
+        <div class="card" style="border-left: 10px solid var(--neon-blue);">
+            <h1 style="margin: 0;">Üdvözlünk, <span id="hero-name" style="color: var(--neon-blue);">Vándor</span>!</h1>
+            <p>Szerver IP: <b style="color: var(--neon-green);">AfonyaSMP.aternos.me</b> | Verzió: <b>1.21.11</b></p>
+        </div>
+
+        <div class="card" style="border-color: var(--purple);">
+            <h3>Hatalmi Parancsok ⚔️</h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                <div>
+                    <p><b>EssentialX Alapok:</b></p>
+                    <code>/tpa</code>, <code>/sethome</code>, <code>/spawn</code>, <code>/msg</code>
+                </div>
+                <div>
+                    <p><b>1.21.11 Special:</b></p>
+                    <code>/give @p mace</code>, <code>/execute lightning</code>
+                </div>
+            </div>
+        </div>
+
+        <h2 style="text-align: center; margin: 40px 0; text-shadow: 0 0 20px var(--neon-pink);">RANGOK BOLTJA</h2>
+        <div class="grid">
+            
+            <div class="card shop-item bronz">
+                <h3 style="color: var(--bronze);">BRONZ</h3>
+                <ul style="text-align: left; font-size: 0.8rem; padding-left: 15px;">
+                    <li>/kit bronz</li>
+                    <li>3 sethome lehetőség</li>
+                    <li>/msg és /tpa jogok</li>
+                </ul>
+                <span class="price">15,000 $</span>
+                <button class="btn" style="background: var(--bronze); color: white;" onclick="processBuy('BRONZ', 15000)">MEGVESZEM</button>
+            </div>
+
+            <div class="card shop-item gold">
+                <h3 style="color: var(--gold);">GOLD</h3>
+                <ul style="text-align: left; font-size: 0.8rem; padding-left: 15px;">
+                    <li>/kit gold</li>
+                    <li>/workbench bárhol</li>
+                    <li>/back halál után</li>
+                </ul>
+                <span class="price">45,000 $</span>
+                <button class="btn" style="background: var(--gold); color: black;" onclick="processBuy('GOLD', 45000)">MEGVESZEM</button>
+            </div>
+
+            <div class="card shop-item saphire">
+                <h3 style="color: var(--saphire);">SAPHIRE</h3>
+                <ul style="text-align: left; font-size: 0.8rem; padding-left: 15px;">
+                    <li>/kit saphire</li>
+                    <li>/enderchest parancs</li>
+                    <li>/heal (5 perc cooldown)</li>
+                </ul>
+                <span class="price">120,000 $</span>
+                <button class="btn" style="background: var(--saphire); color: white;" onclick="processBuy('SAPHIRE', 120000)">MEGVESZEM</button>
+            </div>
+
+            <div class="card shop-item neon">
+                <h3 style="color: var(--neon-pink);">NEON</h3>
+                <ul style="text-align: left; font-size: 0.8rem; padding-left: 15px;">
+                    <li>/fly és /feed</li>
+                    <li>/nick (színes név)</li>
+                    <li>/condense parancs</li>
+                </ul>
+                <span class="price">350,000 $</span>
+                <button class="btn" style="background: var(--neon-pink); color: white;" onclick="processBuy('NEON', 350000)">MEGVESZEM</button>
+            </div>
+
+        </div>
+    </div>
 
     <script>
         const WEBHOOK_URL = "https://discord.com/api/webhooks/1482022373292249164/0yqIhDREOGf3RAGfSlZ6ubpLyCKfjvndvfsGDGtrNfhuOQsfCLVPpIgpBxAnHMAp48e6";
+        let activeUser = null;
 
-        const jokes = ["Arise!", "Ez S-Rank volt!", "Ez fájni fog...", "Lépj szintet!", "Blueberry is watching.", "Hé, vigyázz a creeperrel!", "Az admin mindent lát."];
+        // AUTH LOGIKA
+        function handleAuth() {
+            const name = document.getElementById('username').value.trim();
+            const pass = document.getElementById('password').value.trim();
 
-        function buy(rank, id) {
-            const name = document.getElementById(id).value;
-            if(!name) { showModal("HIBA!", "Add meg a neved!"); return; }
-            
-            fetch(WEBHOOK_URL, {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({ content: `🚨 **ÚJ RENDELÉS (1.21.11)**\nJátékos: **${name}**\nRang: **${rank}**` })
-            }).then(() => {
-                showModal("SIKER!", `Az igénylés elküldve! Adminjaink hamarosan keresnek a szerveren.`);
-                spawnJoke();
-            });
+            if(name.length < 3 || pass.length < 3) return alert("Túl rövid adatok!");
+
+            let db = JSON.parse(localStorage.getItem('afonyasmp_db') || "{}");
+
+            if(db[name]) {
+                if(db[name].pass !== pass) return alert("Rossz jelszó!");
+            } else {
+                db[name] = { pass: pass, money: 350000, ranks: [] };
+                localStorage.setItem('afonyasmp_db', JSON.stringify(db));
+                alert("Üdvözlünk az ÁfonyaSMP-n! Kaptál 350,000$ kezdőtőkét.");
+            }
+
+            activeUser = { name: name, ...db[name] };
+            startUI();
         }
 
-        function showModal(title, msg) {
-            document.getElementById('modalTitle').innerText = title;
-            document.getElementById('modalMsg').innerText = msg;
-            document.getElementById('customModal').style.display = 'flex';
+        function startUI() {
+            document.getElementById('auth-screen').classList.add('hidden');
+            document.getElementById('main-content').classList.remove('hidden');
+            document.getElementById('money-ui').classList.remove('hidden');
+            document.getElementById('user-name').innerText = activeUser.name;
+            document.getElementById('hero-name').innerText = activeUser.name;
+            updateBalanceDisplay();
         }
-        function closeModal() { document.getElementById('customModal').style.display = 'none'; }
 
-        function spawnJoke() {
+        function updateBalanceDisplay() {
+            document.getElementById('user-money').innerText = activeUser.money.toLocaleString();
+            let db = JSON.parse(localStorage.getItem('afonyasmp_db'));
+            db[activeUser.name].money = activeUser.money;
+            localStorage.setItem('afonyasmp_db', JSON.stringify(db));
+        }
+
+        // VÁSÁRLÁS
+        function processBuy(rank, price) {
+            if(activeUser.money < price) return alert("Nincs elég pénzed!");
+
+            if(confirm(`Megveszed a ${rank} rangot ${price.toLocaleString()}$ áron?`)) {
+                activeUser.money -= price;
+                updateBalanceDisplay();
+                spawnJoke("ARISE!");
+
+                fetch(WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        content: `🛒 **AUTOMATA VÁSÁRLÁS (1.21.11)**\n━━━━━━━━━━━━━━\n👤 Játékos: **${activeUser.name}**\n💎 Rang: **${rank}**\n💰 Maradék pénz: ${activeUser.money.toLocaleString()}$\n━━━━━━━━━━━━━━`
+                    })
+                });
+                alert("Vásárlás kész! Az adminok kaptak értesítést.");
+            }
+        }
+
+        function spawnJoke(txt) {
             const joke = document.createElement('div');
             joke.className = 'floating-joke';
-            joke.innerText = jokes[Math.floor(Math.random() * jokes.length)];
-            joke.style.left = Math.random() * 80 + 10 + '%';
-            joke.style.top = '80%';
+            joke.innerText = txt || "SZINTLÉPÉS!";
+            joke.style.left = Math.random() * 80 + 10 + "%";
+            joke.style.top = "70%";
             document.body.appendChild(joke);
             setTimeout(() => joke.remove(), 3000);
         }
 
-        // --- FIXÁLT RÉSZECSKÉK ---
+        // RÉSZECSKÉK
         const canvas = document.getElementById('particle-canvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
-        let mouse = { x: 0, y: 0 };
-
         window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
         canvas.width = window.innerWidth; canvas.height = window.innerHeight;
 
         window.addEventListener('mousemove', (e) => {
-            mouse.x = e.clientX; mouse.y = e.clientY;
-            for(let i=0; i<3; i++) particles.push(new Particle(mouse.x, mouse.y));
+            for(let i=0; i<3; i++) particles.push({
+                x: e.clientX, y: e.clientY,
+                vx: Math.random() * 4 - 2, vy: Math.random() * 4 - 2,
+                life: 1, c: Math.random() > 0.5 ? '#38bdf8' : '#ff79c6'
+            });
         });
 
-        class Particle {
-            constructor(x, y) {
-                this.x = x; this.y = y;
-                this.size = Math.random() * 4 + 1;
-                this.speedX = Math.random() * 6 - 3;
-                this.speedY = Math.random() * 6 - 3;
-                this.color = Math.random() > 0.5 ? '#38bdf8' : '#ff79c6';
-                this.opacity = 1;
-            }
-            update() { this.x += this.speedX; this.y += this.speedY; this.opacity -= 0.02; }
-            draw() {
-                ctx.globalAlpha = this.opacity;
-                ctx.fillStyle = this.color;
-                ctx.shadowBlur = 10;
-                ctx.shadowColor = this.color;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-            }
-        }
-
         function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            for (let i = 0; i < particles.length; i++) {
-                particles[i].update(); particles[i].draw();
-                if (particles[i].opacity <= 0) { particles.splice(i, 1); i--; }
-            }
+            ctx.clearRect(0,0,canvas.width, canvas.height);
+            particles.forEach((p, i) => {
+                p.x += p.vx; p.y += p.vy; p.life -= 0.02;
+                ctx.globalAlpha = p.life; ctx.fillStyle = p.c;
+                ctx.shadowBlur = 10; ctx.shadowColor = p.c;
+                ctx.beginPath(); ctx.arc(p.x, p.y, 3, 0, Math.PI*2); ctx.fill();
+                if(p.life <= 0) particles.splice(i, 1);
+            });
             requestAnimationFrame(animate);
         }
         animate();
-
-        // Véletlenszerű poénok felvillanása néha
-        setInterval(() => { if(Math.random() > 0.7) spawnJoke(); }, 5000);
     </script>
 </body>
 </html>

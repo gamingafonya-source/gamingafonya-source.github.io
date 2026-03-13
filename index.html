@@ -90,6 +90,7 @@
             cursor: pointer; font-weight: bold; font-size: 0.75rem; color: #000;
         }
 /* --- VILÁGÍTÓ DISCORD GOMB --- */
+        /* DISCORD GOMB STÍLUSA */
         .footer-discord {
             position: fixed;
             bottom: 30px;
@@ -104,21 +105,37 @@
             text-decoration: none;
             color: white;
             font-weight: bold;
-            font-size: 1.1rem;
             z-index: 1000;
-            transition: 0.4s;
-            /* Neon ragyogás */
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 0 20px rgba(88, 101, 242, 0.4), 0 0 40px rgba(167, 139, 250, 0.2);
-            animation: pulseGlow 3s infinite;
+            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
-
+        
+/* HA RÁVISZED AZ EGERET */
+        .footer-discord:hover {
+            transform: translateX(-50%) translateY(-10px) scale(1.05);
+            background: #4752c4;
+            border-color: var(--pink-glow);
+            /* Lila és rózsaszín durva neon fény */
+            box-shadow: 0 0 30px var(--accent-purple), 0 0 60px var(--pink-glow);
         /* Particles & Floating Text */
         #particle-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
         .floating-text { position: fixed; pointer-events: none; color: var(--solo-blue); font-family: monospace; font-weight: bold; z-index: 2000; animation: floatUp 2.5s forwards; text-shadow: 0 0 10px #000; }
         @keyframes floatUp { 0% { opacity: 0; transform: translateY(0); } 20% { opacity: 1; } 100% { transform: translateY(-120px); opacity: 0; } }
 
         @media (max-width: 900px) { .container { grid-template-columns: 1fr; } .hero, .commands-card { grid-column: span 1; transform: none; } }
+            }
+
+        #particle-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1100; /* A gomb felett is legyenek részecskék */
+        }
+        
     </style>
 </head>
 <body>
@@ -260,7 +277,19 @@
             u() { this.x += this.vX; this.y += this.vY; if(this.s > 0.1) this.s -= 0.04; }
             d() { ctx.fillStyle = this.c; ctx.globalAlpha = this.a; ctx.beginPath(); ctx.arc(this.x, this.y, this.s, 0, Math.PI*2); ctx.fill(); }
         }
-
+function handleParticles() {
+            // Ha rajta van az egér a gombon, folyamatosan gyártunk lila és rózsaszín részecskéket
+            if (isHovering) {
+                const rect = discordBtn.getBoundingClientRect();
+                for (let i = 0; i < 3; i++) {
+                    // Véletlenszerűen a gomb területéről indítjuk
+                    const startX = rect.left + Math.random() * rect.width;
+                    const startY = rect.top + Math.random() * rect.height;
+                    // Lila (#a78bfa) vagy Rózsaszín (#ff79c6)
+                    const color = Math.random() > 0.5 ? '#a78bfa' : '#ff79c6';
+                    particles.push(new Particle(startX, startY, color));
+                }
+            }
         function anim() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             for (let i = 0; i < particles.length; i++) {

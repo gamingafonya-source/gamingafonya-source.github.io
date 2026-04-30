@@ -17,7 +17,7 @@
         <div class="flex flex-col md:flex-row justify-between items-center mb-12 gap-6">
             <div>
                 <h1 class="text-4xl font-black mb-2 tracking-tight">Moderációs <span class="gradient-text">Rendszer</span></h1>
-                <p class="text-slate-400">A Discord szerver biztonsági és moderációs felülete.</p>
+                <p class="text-slate-400">Biztonsági és adminisztrációs felület</p>
             </div>
             <a href="https://discord.com/api/oauth2/authorize?client_id=1498355709807562932&permissions=268503056&scope=bot%20applications.commands" 
                target="_blank" 
@@ -28,21 +28,21 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
             <div class="glass p-6 rounded-2xl">
-                <h2 class="text-xl font-bold mb-3"><i class="fas fa-terminal text-blue-400 mr-2"></i> Parancsok (Prefix: <code>.</code>)</h2>
+                <h2 class="text-xl font-bold mb-3"><i class="fas fa-terminal text-blue-400 mr-2"></i> Prefix Parancsok (<code>.</code>)</h2>
                 <ul class="text-slate-300 space-y-2 text-sm">
                     <li><strong>.tempmute @User [idő] [indok]</strong> - Ideiglenes némítás</li>
                     <li><strong>.tempban @User [idő] [indok]</strong> - Ideiglenes kitiltás</li>
-                    <li><strong>.ban @User [indok]</strong> - Végleges kitiltás</li>
-                    <li><strong>.kick @User [indok]</strong> - Kirúgás a szerverről</li>
+                    <li><strong>.warn @User [indok]</strong> - Figyelmeztetés</li>
                 </ul>
             </div>
             
             <div class="glass p-6 rounded-2xl">
-                <h2 class="text-xl font-bold mb-3"><i class="fas fa-shield-alt text-green-400 mr-2"></i> Jogosultságok</h2>
-                <p class="text-slate-300 text-sm leading-relaxed">
-                    A parancsok használatához a felhasználónak rendelkeznie kell egy <strong>Staff</strong> nevű ranggal. 
-                    Győződj meg róla, hogy a bot rangja a ranglistán feljebb van a moderálandó felhasználóknál.
-                </p>
+                <h2 class="text-xl font-bold mb-3"><i class="fas fa-slash text-purple-400 mr-2"></i> Slash Parancsok (<code>/</code>)</h2>
+                <ul class="text-slate-300 space-y-2 text-sm">
+                    <li><strong>/mute @User [indok]</strong> - Némítás</li>
+                    <li><strong>/ban @User [indok]</strong> - Kitiltás</li>
+                    <li><strong>/warn @User [indok]</strong> - Figyelmeztetés</li>
+                </ul>
             </div>
         </div>
 

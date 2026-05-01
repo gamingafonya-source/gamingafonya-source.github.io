@@ -1,1 +1,54 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zenebot - Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #0f172a; color: white; font-family: 'Inter', sans-serif; }
+        .glass { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); }
+        .gradient-text { background: linear-gradient(90deg, #38bdf8, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center p-6">
+    <div class="max-w-4xl w-full glass rounded-3xl p-8 shadow-2xl">
+        <div class="flex flex-col md:flex-row justify-between items-center mb-12 gap-6">
+            <div>
+                <h1 class="text-4xl font-black mb-2 tracking-tight">Zenebot <span class="gradient-text">Rendszer</span></h1>
+                <p class="text-slate-400">Hangrendszer webes felülete</p>
+            </div>
+            <a href="https://discord.com/api/oauth2/authorize?client_id=1498355709807562932&permissions=2184318016&scope=bot%20applications.commands" 
+               target="_blank" 
+               class="bg-indigo-600 hover:bg-indigo-500 transition-all px-8 py-3 rounded-xl font-bold flex items-center gap-2 shadow-lg shadow-indigo-500/20">
+                <i class="fab fa-discord"></i> Bot meghívása
+            </a>
+        </div>
 
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
+            <div class="glass p-6 rounded-2xl">
+                <h2 class="text-xl font-bold mb-3"><i class="fas fa-music text-blue-400 mr-2"></i> Parancsok (Prefix: <code>.</code>)</h2>
+                <ul class="text-slate-300 space-y-2 text-sm">
+                    <li><strong>.join</strong> - Csatlakozás a szobához</li>
+                    <li><strong>.play [cím]</strong> - Zene lejátszása</li>
+                    <li><strong>.skip</strong> - Következő zeneszám</li>
+                    <li><strong>.stop</strong> - Lejátszás leállítása</li>
+                    <li><strong>.leave</strong> - Kilépés</li>
+                </ul>
+            </div>
+            
+            <div class="glass p-6 rounded-2xl">
+                <h2 class="text-xl font-bold mb-3"><i class="fas fa-shield-alt text-green-400 mr-2"></i> Jogosultságok</h2>
+                <p class="text-slate-300 text-sm leading-relaxed">
+                    A bot használatához nem szükséges speciális jogosultság, csak engedélyezned kell számára, hogy csatlakozzon a hangcsatornákhoz.
+                </p>
+            </div>
+        </div>
+
+        <div class="mt-12 text-center text-slate-500 text-sm border-t border-slate-800 pt-6">
+            &copy; 2026 Zenebot System
+        </div>
+    </div>
+</body>
+</html>

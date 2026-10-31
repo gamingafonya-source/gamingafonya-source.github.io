@@ -1,744 +1,1041 @@
 <!DOCTYPE html>
-<html lang="hu" class="dark scroll-smooth" data-theme="purple">
+<html lang="hu" data-theme="purple" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VoidSMP - Webáruház & Minecraft Szerver</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        void: {
-                            950: '#07050E',
-                            900: '#0C091A',
-                            800: '#140F2B',
-                            700: '#201842',
-                        }
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    },
-                    animation: {
-                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                        'float': 'float 4s ease-in-out infinite',
-                        'glow': 'glow 2s ease-in-out infinite alternate',
-                    },
-                    keyframes: {
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0px)' },
-                            '50%': { transform: 'translateY(-10px)' },
-                        },
-                        glow: {
-                            '0%': { filter: 'drop-shadow(0 0 15px var(--theme-accent))' },
-                            '100%': { filter: 'drop-shadow(0 0 28px var(--theme-secondary))' }
-                        }
-                    }
-                }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VoidSMP | Webáruház & Minecraft Szerver</title>
+  <meta name="description" content="VoidSMP Minecraft szerver és webáruház — VoidCoin, rangok, közösség, prémium funkciók." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          boxShadow: {
+            glow: '0 0 0 1px rgba(255,255,255,0.05), 0 24px 70px rgba(139,92,246,0.28)',
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+          colors: {
+            void: {
+              50: '#f7f5ff',
+              100: '#f0eaff',
+              200: '#d9ccff',
+              300: '#bca9ff',
+              400: '#9a7eff',
+              500: '#7c5cff',
+              600: '#6547eb',
+              700: '#4b3bb7',
+              800: '#2d245f',
+              900: '#17142d',
+              950: '#0d0b18'
             }
+          }
         }
-    </script>
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <!-- Canvas Confetti -->
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    <!-- Google Font: Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <style>
-        /* Dynamic CSS Variables for Color Themes */
-        :root[data-theme="purple"] {
-            --theme-accent: #A855F7;
-            --theme-accent-hover: #9333EA;
-            --theme-secondary: #06B6D4;
-            --theme-glow: rgba(168, 85, 247, 0.35);
-            --theme-border: rgba(168, 85, 247, 0.25);
-            --theme-bg-gradient: linear-gradient(135deg, #C084FC 0%, #A855F7 50%, #6B21A8 100%);
-            --theme-bg-base: #07050E;
-        }
+      }
+    };
+  </script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-page: #f6f3ff;
+      --bg-soft: #f1ecff;
+      --panel: rgba(255, 255, 255, 0.72);
+      --panel-strong: rgba(255, 255, 255, 0.85);
+      --panel-alt: rgba(255, 255, 255, 0.58);
+      --text: #171724;
+      --text-soft: #595b73;
+      --muted: #74799b;
+      --line: rgba(104, 82, 166, 0.18);
+      --accent: #8b5cf6;
+      --accent-strong: #7c3aed;
+      --accent-soft: rgba(139, 92, 246, 0.12);
+      --secondary: #22d3ee;
+      --gold: #f59e0b;
+      --success: #10b981;
+      --danger: #ef4444;
+      --shadow: rgba(88, 63, 160, 0.18);
+      --theme-glow: rgba(139, 92, 246, 0.25);
+      --hero-radial: radial-gradient(circle at top, rgba(139, 92, 246, 0.30), transparent 55%);
+    }
 
-        :root[data-theme="green"] {
-            --theme-accent: #10B981;
-            --theme-accent-hover: #059669;
-            --theme-secondary: #34D399;
-            --theme-glow: rgba(16, 185, 129, 0.35);
-            --theme-border: rgba(16, 185, 129, 0.25);
-            --theme-bg-gradient: linear-gradient(135deg, #34D399 0%, #10B981 50%, #064E3B 100%);
-            --theme-bg-base: #03140E;
-        }
+    html[data-theme="green"] {
+      --bg-page: #f3fff9;
+      --bg-soft: #ebfff6;
+      --panel: rgba(255, 255, 255, 0.72);
+      --panel-strong: rgba(255, 255, 255, 0.88);
+      --panel-alt: rgba(255, 255, 255, 0.6);
+      --text: #15231d;
+      --text-soft: #526b60;
+      --muted: #6c8177;
+      --line: rgba(16, 185, 129, 0.15);
+      --accent: #10b981;
+      --accent-strong: #059669;
+      --accent-soft: rgba(16, 185, 129, 0.12);
+      --secondary: #2dd4bf;
+      --gold: #f59e0b;
+      --success: #10b981;
+      --danger: #ef4444;
+      --theme-glow: rgba(16, 185, 129, 0.22);
+      --hero-radial: radial-gradient(circle at top, rgba(16, 185, 129, 0.28), transparent 55%);
+    }
 
-        :root[data-theme="blue"] {
-            --theme-accent: #3B82F6;
-            --theme-accent-hover: #2563EB;
-            --theme-secondary: #38BDF8;
-            --theme-glow: rgba(59, 130, 246, 0.35);
-            --theme-border: rgba(59, 130, 246, 0.25);
-            --theme-bg-gradient: linear-gradient(135deg, #38BDF8 0%, #3B82F6 50%, #1E3A8A 100%);
-            --theme-bg-base: #030B1A;
-        }
+    html[data-theme="blue"] {
+      --bg-page: #f2f9ff;
+      --bg-soft: #edf7ff;
+      --panel: rgba(255, 255, 255, 0.75);
+      --panel-strong: rgba(255, 255, 255, 0.88);
+      --panel-alt: rgba(255, 255, 255, 0.62);
+      --text: #14253d;
+      --text-soft: #566a83;
+      --muted: #6f7f97;
+      --line: rgba(59, 130, 246, 0.14);
+      --accent: #3b82f6;
+      --accent-strong: #2563eb;
+      --accent-soft: rgba(59, 130, 246, 0.12);
+      --secondary: #38bdf8;
+      --gold: #f59e0b;
+      --success: #10b981;
+      --danger: #ef4444;
+      --theme-glow: rgba(59, 130, 246, 0.24);
+      --hero-radial: radial-gradient(circle at top, rgba(59, 130, 246, 0.30), transparent 55%);
+    }
 
-        :root[data-theme="red"] {
-            --theme-accent: #EF4444;
-            --theme-accent-hover: #DC2626;
-            --theme-secondary: #F97316;
-            --theme-glow: rgba(239, 68, 68, 0.35);
-            --theme-border: rgba(239, 68, 68, 0.25);
-            --theme-bg-gradient: linear-gradient(135deg, #F87171 0%, #EF4444 50%, #7F1D1D 100%);
-            --theme-bg-base: #140404;
-        }
+    html[data-theme="red"] {
+      --bg-page: #fff5f5;
+      --bg-soft: #fff0f0;
+      --panel: rgba(255, 255, 255, 0.74);
+      --panel-strong: rgba(255, 255, 255, 0.88);
+      --panel-alt: rgba(255, 255, 255, 0.62);
+      --text: #2a1d1d;
+      --text-soft: #6a4e4e;
+      --muted: #7b5d5d;
+      --line: rgba(239, 68, 68, 0.14);
+      --accent: #ef4444;
+      --accent-strong: #dc2626;
+      --accent-soft: rgba(239, 68, 68, 0.12);
+      --secondary: #fb923c;
+      --gold: #f59e0b;
+      --success: #10b981;
+      --danger: #ef4444;
+      --theme-glow: rgba(239, 68, 68, 0.22);
+      --hero-radial: radial-gradient(circle at top, rgba(239, 68, 68, 0.25), transparent 55%);
+    }
 
-        :root[data-theme="obsidian"] {
-            --theme-accent: #94A3B8;
-            --theme-accent-hover: #64748B;
-            --theme-secondary: #F3F4F6;
-            --theme-glow: rgba(243, 244, 246, 0.2);
-            --theme-border: rgba(255, 255, 255, 0.15);
-            --theme-bg-gradient: linear-gradient(135deg, #FFFFFF 0%, #94A3B8 50%, #334155 100%);
-            --theme-bg-base: #0A0C10;
-        }
+    html[data-theme="obsidian"] {
+      --bg-page: #0e1118;
+      --bg-soft: #141a24;
+      --panel: rgba(17, 23, 31, 0.72);
+      --panel-strong: rgba(20, 27, 36, 0.9);
+      --panel-alt: rgba(18, 24, 31, 0.6);
+      --text: #f4f8ff;
+      --text-soft: #d8e6ff;
+      --muted: #b9c5d8;
+      --line: rgba(255, 255, 255, 0.1);
+      --accent: #94a3b8;
+      --accent-strong: #cbd5e1;
+      --accent-soft: rgba(148, 163, 184, 0.12);
+      --secondary: #f8fafc;
+      --gold: #fbbf24;
+      --success: #34d399;
+      --danger: #f87171;
+      --theme-glow: rgba(148, 163, 184, 0.2);
+      --hero-radial: radial-gradient(circle at top, rgba(148, 163, 184, 0.18), transparent 55%);
+    }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--theme-bg-base);
-            color: #F3F4F6;
-            overflow-x: hidden;
-            transition: background-color 0.5s ease;
-        }
+    * { box-sizing: border-box; }
 
-        .gradient-theme-text {
-            background: var(--theme-bg-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+    html { scroll-behavior: smooth; }
 
-        .gradient-gold-text {
-            background: linear-gradient(135deg, #FDE047 0%, #F59E0B 50%, #D97706 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background:
+        radial-gradient(circle at top right, rgba(139, 92, 246, 0.12), transparent 28%),
+        linear-gradient(180deg, var(--bg-page) 0%, var(--bg-soft) 100%);
+      color: var(--text);
+      overflow-x: hidden;
+      transition: background 0.4s ease, color 0.3s ease;
+      cursor: none;
+    }
 
-        .glass-card {
-            background: rgba(12, 9, 26, 0.75);
-            backdrop-filter: blur(18px);
-            -webkit-backdrop-filter: blur(18px);
-            border: 1px solid var(--theme-border);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
-            transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
-        }
+    a, button {
+      cursor: none;
+    }
 
-        .glass-card:hover {
-            border-color: var(--theme-accent);
-            box-shadow: 0 10px 35px 0 var(--theme-glow);
-        }
+    .cursor-glow {
+      position: fixed;
+      width: 220px;
+      height: 220px;
+      border-radius: 9999px;
+      background: radial-gradient(circle, rgba(255,255,255,0.26), rgba(139,92,246,0.10) 42%, transparent 68%);
+      pointer-events: none;
+      z-index: 80;
+      transform: translate(-50%, -50%);
+      transition: opacity 0.15s ease;
+      filter: blur(10px);
+      opacity: 0.9;
+    }
 
-        .theme-btn-primary {
-            background-color: var(--theme-accent);
-            color: #FFFFFF;
-            transition: all 0.25s ease;
-        }
+    .cursor-dot {
+      position: fixed;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 2px solid rgba(255,255,255,0.8);
+      box-shadow: 0 0 20px rgba(139, 92, 246, 0.7);
+      pointer-events: none;
+      z-index: 81;
+      transform: translate(-50%, -50%);
+      transition: width 0.2s ease, height 0.2s ease, background 0.2s ease;
+    }
 
-        .theme-btn-primary:hover {
-            background-color: var(--theme-accent-hover);
-            box-shadow: 0 0 20px var(--theme-glow);
-        }
+    .soft-shell {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      box-shadow: 0 10px 35px var(--shadow);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
 
-        .dynamic-glow-bg {
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            z-index: 0;
-            background: radial-gradient(circle at 50% 20%, var(--theme-glow) 0%, transparent 60%);
-            transition: background 0.5s ease;
-        }
+    .section-shell {
+      background: var(--panel-strong);
+      border: 1px solid var(--line);
+      box-shadow: 0 18px 70px rgba(15, 23, 42, 0.06);
+    }
 
-        #particles-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            pointer-events: none;
-        }
+    .brand-mark {
+      background: linear-gradient(135deg, var(--accent), var(--secondary));
+      box-shadow: 0 18px 40px var(--theme-glow);
+    }
 
-        .insta-gradient {
-            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
-        }
-    </style>
+    .gradient-text {
+      background: linear-gradient(135deg, var(--accent), var(--secondary));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .gold-text {
+      background: linear-gradient(135deg, #facc15 0%, #f59e0b 50%, #f97316 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hud-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--success);
+      box-shadow: 0 0 0 8px rgba(16, 185, 129, 0.12);
+      animation: pulseDot 2s infinite;
+    }
+
+    @keyframes pulseDot {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.3); opacity: 0.72; }
+    }
+
+    .hero-ring {
+      position: absolute;
+      inset: -18% 20% auto auto;
+      width: 360px;
+      height: 360px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(139, 92, 246, 0.18), transparent 62%);
+      filter: blur(18px);
+      pointer-events: none;
+    }
+
+    .theme-pill {
+      background: linear-gradient(135deg, rgba(255,255,255,0.72), rgba(255,255,255,0.35));
+      border: 1px solid var(--line);
+    }
+
+    .nav-link {
+      color: var(--text-soft);
+      transition: color 0.2s ease, opacity 0.2s ease;
+    }
+
+    .nav-link:hover {
+      color: var(--accent);
+    }
+
+    .card-hover {
+      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .card-hover:hover {
+      transform: translateY(-4px);
+      border-color: rgba(139, 92, 246, 0.28);
+      box-shadow: 0 18px 40px rgba(27, 18, 51, 0.09);
+    }
+
+    .glass-button {
+      background: linear-gradient(135deg, var(--accent), var(--secondary));
+      color: white;
+      box-shadow: 0 12px 30px rgba(34, 211, 238, 0.2);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .glass-button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 16px 40px rgba(139, 92, 246, 0.28);
+    }
+
+    .chip {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.46);
+      color: var(--text-soft);
+    }
+
+    #particles-canvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.9;
+    }
+
+    .content-shell {
+      position: relative;
+      z-index: 1;
+    }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.48);
+      backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 90;
+      padding: 20px;
+    }
+
+    .modal-backdrop.show { display: flex; }
+
+    .modal-panel {
+      width: min(560px, 100%);
+      border-radius: 28px;
+      padding: 24px;
+      background: rgba(255,255,255,0.82);
+      border: 1px solid var(--line);
+      box-shadow: 0 30px 90px rgba(15, 23, 42, 0.22);
+      color: var(--text);
+    }
+
+    .stat-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.08), rgba(34, 211, 238, 0.08));
+      opacity: 0;
+      transition: opacity 0.25s ease;
+      pointer-events: none;
+    }
+
+    .stat-card:hover::before { opacity: 1; }
+
+    @media (max-width: 768px) {
+      body { cursor: auto; }
+      .cursor-glow, .cursor-dot { display: none; }
+      .mobile-menu {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.35s ease;
+      }
+      .mobile-menu.open { max-height: 500px; }
+    }
+  </style>
 </head>
-<body class="relative min-h-screen flex flex-col justify-between selection:bg-purple-500 selection:text-white">
+<body>
+  <canvas id="particles-canvas"></canvas>
+  <div class="cursor-glow"></div>
+  <div class="cursor-dot"></div>
 
-    <!-- Radial Glow Background -->
-    <div class="dynamic-glow-bg"></div>
-
-    <!-- Canvas Interactive Particles -->
-    <canvas id="particles-canvas"></canvas>
-
-    <!-- Theme Switcher Floating Widget -->
-    <div class="fixed bottom-6 left-6 z-50 flex items-center gap-2 glass-card p-2 rounded-2xl shadow-2xl border border-white/10">
-        <span class="text-[10px] uppercase tracking-wider font-extrabold text-gray-400 pl-2 hidden sm:inline">Téma:</span>
-        <div class="flex items-center gap-1.5">
-            <button onclick="setTheme('purple')" class="w-6 h-6 rounded-full bg-purple-500 ring-2 ring-transparent hover:scale-110 transition-all" title="Void Lila"></button>
-            <button onclick="setTheme('green')" class="w-6 h-6 rounded-full bg-emerald-500 ring-2 ring-transparent hover:scale-110 transition-all" title="Cyber Neon"></button>
-            <button onclick="setTheme('blue')" class="w-6 h-6 rounded-full bg-blue-500 ring-2 ring-transparent hover:scale-110 transition-all" title="Hyper Ocean"></button>
-            <button onclick="setTheme('red')" class="w-6 h-6 rounded-full bg-red-500 ring-2 ring-transparent hover:scale-110 transition-all" title="Blood Eclipse"></button>
-            <button onclick="setTheme('obsidian')" class="w-6 h-6 rounded-full bg-slate-300 ring-2 ring-transparent hover:scale-110 transition-all" title="Dark Obsidian"></button>
-        </div>
-    </div>
-
-    <!-- Header Navigation -->
-    <header class="sticky top-0 z-40 w-full glass-card border-b border-white/10">
-        <div class="max-w-7xl mx-auto px-2 sm:px-4 lg:px-6 h-20 flex items-center justify-between">
-            <!-- Brand Logo -->
-            <div class="flex items-center space-x-3 cursor-pointer" onclick="scrollToSection('hero')">
-                <div class="w-11 h-11 rounded-xl bg-gradient-to-tr from-purple-500 to-cyan-400 p-0.5 animate-pulse-slow shadow-lg shadow-purple-500/20">
-                    <div class="w-full h-full bg-void-950 rounded-[10px] overflow-hidden flex items-center justify-center">
-                        <img src="server-icon.png" alt="VoidSMP Szerver Ikon" class="w-full h-full object-cover rounded-[9px]" onerror="this.src='https://placehold.co/100x100/130F26/A855F7?text=VOID'">
-                    </div>
-                </div>
-                <span class="text-2xl font-extrabold tracking-wider text-white">VOID<span class="gradient-theme-text">SMP</span></span>
+  <div class="content-shell">
+    <header class="sticky top-0 z-40 border-b" style="background: rgba(255,255,255,0.46); border-color: var(--line); backdrop-filter: blur(18px);">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-20 gap-4">
+          <div class="flex items-center gap-3 cursor-pointer" onclick="scrollToSection('hero')" aria-label="Ugrás a kezdőlapra">
+            <div class="brand-mark w-11 h-11 rounded-xl flex items-center justify-center text-white font-black text-lg">V</div>
+            <div class="leading-none">
+              <div class="text-xl font-black tracking-[0.18em]">VOID<span class="gradient-text">SMP</span></div>
             </div>
+          </div>
 
-            <!-- Desktop Navigation -->
-            <nav class="hidden md:flex items-center space-x-10 font-medium text-sm">
-                <a href="#hero" class="hover:text-purple-400 transition-colors flex items-center gap-1.5"><i data-lucide="home" class="w-4 h-4"></i> Kezdőlap</a>
-                <a href="#store" class="hover:text-amber-400 transition-colors flex items-center gap-1.5 text-amber-300 font-semibold"><i data-lucide="coins" class="w-4 h-4 text-amber-400"></i> VoidCoin Bolt</a>
-                <a href="#ranks-info" class="hover:text-purple-400 transition-colors flex items-center gap-1.5"><i data-lucide="crown" class="w-4 h-4 text-purple-400"></i> Rangok Leírása</a>
-                <a href="#staff" class="hover:text-purple-400 transition-colors flex items-center gap-1.5"><i data-lucide="shield" class="w-4 h-4"></i> Vezetőség</a>
-                <a href="#platforms" class="hover:text-purple-400 transition-colors flex items-center gap-1.5"><i data-lucide="share-2" class="w-4 h-4 text-cyan-400"></i> Platformok</a>
-                <button onclick="openRulesModal()" class="hover:text-purple-400 transition-colors flex items-center gap-1.5 text-gray-300"><i data-lucide="book-open" class="w-4 h-4"></i> Szabályzat</button>
-            </nav>
+          <nav class="hidden md:flex items-center gap-8 text-sm font-medium">
+            <a href="#hero" class="nav-link">Kezdőlap</a>
+            <a href="#store" class="nav-link">VoidCoin Bolt</a>
+            <a href="#ranks-info" class="nav-link">Rangok</a>
+            <a href="#staff" class="nav-link">Vezetőség</a>
+            <a href="#platforms" class="nav-link">Platformok</a>
+            <button class="nav-link" onclick="openRulesModal()">Szabályzat</button>
+          </nav>
 
-            <!-- Actions & Cart Button -->
-            <div class="hidden sm:flex items-center gap-3">
-                <button id="audio-toggle" onclick="toggleAudio()" class="p-2.5 rounded-xl bg-void-800 border border-white/10 text-gray-300 hover:text-white transition-all" title="Hanghatások Be/Ki">
-                    <i id="audio-icon" data-lucide="volume-2" class="w-4 h-4"></i>
-                </button>
-
-                <!-- Shopping Cart Toggle -->
-                <button onclick="openCartModal()" class="relative p-2.5 rounded-xl bg-amber-500/20 border border-amber-500/40 text-amber-300 hover:bg-amber-500/30 transition-all flex items-center gap-2 font-bold text-xs">
-                    <i data-lucide="shopping-cart" class="w-4 h-4 text-amber-400"></i>
-                    <span class="hidden lg:inline">Kosár</span>
-                    <span id="cart-badge" class="ml-1 px-2 py-0.5 text-[10px] font-black rounded-full bg-amber-500 text-slate-950">0</span>
-                </button>
-
-                <!-- Auth Container -->
-                <div id="auth-container">
-                    <button onclick="openAuthModal('login')" class="px-4 py-2 rounded-xl bg-void-800 hover:bg-void-700 border border-white/10 font-semibold text-xs text-white flex items-center gap-2 transition-all">
-                        <i data-lucide="user" class="w-4 h-4 text-purple-400"></i> Bejelentkezés
-                    </button>
-                </div>
-
-                <!-- Server IP Button -->
-                <button onclick="copyIpAddress()" class="relative group overflow-hidden rounded-xl p-[1px] font-semibold text-xs uppercase tracking-wider">
-                    <span class="absolute inset-0 bg-gradient-to-r from-purple-500 to-cyan-500 rounded-xl opacity-80 group-hover:opacity-100 transition-all"></span>
-                    <span class="relative block px-4 py-2 bg-void-950 rounded-[11px] text-white flex items-center gap-2">
-                        <i data-lucide="copy" class="w-4 h-4 text-cyan-400"></i>
-                        <span id="nav-ip-text">play.voidsmp.net</span>
-                    </span>
-                </button>
-            </div>
-
-            <!-- Mobile Menu Toggle -->
-            <button id="menu-toggle" class="md:hidden text-gray-300 hover:text-white p-2">
-                <i data-lucide="menu" class="w-6 h-6"></i>
+          <div class="hidden sm:flex items-center gap-3">
+            <button id="audio-toggle" class="soft-shell rounded-xl w-11 h-11 flex items-center justify-center text-[var(--text-soft)] hover:text-[var(--text)] transition-colors" onclick="toggleAudio()" aria-label="Hang be-ki">
+              <i data-lucide="volume-2" class="w-4 h-4"></i>
             </button>
+            <button class="soft-shell rounded-xl px-3.5 py-2.5 flex items-center gap-2 text-sm font-semibold text-[var(--text-soft)] hover:text-[var(--text)] transition-colors" onclick="openCartModal()">
+              <i data-lucide="shopping-cart" class="w-4 h-4 text-amber-500"></i>
+              Kosár
+              <span id="cart-badge" class="min-w-6 h-6 px-1.5 rounded-full bg-amber-400 text-slate-950 text-[10px] font-black flex items-center justify-center">0</span>
+            </button>
+            <button class="soft-shell rounded-xl px-3.5 py-2.5 text-sm font-semibold text-[var(--text)]" onclick="openAuthModal('login')">
+              Bejelentkezés
+            </button>
+            <button class="glass-button rounded-xl px-4 py-2.5 text-xs font-black uppercase tracking-wide" onclick="copyIpAddress()">
+              play.voidsmp.net
+            </button>
+          </div>
+
+          <button id="menu-toggle" class="md:hidden soft-shell rounded-xl w-11 h-11 flex items-center justify-center text-[var(--text-soft)]" aria-label="Mobil menü">
+            <i data-lucide="menu" class="w-5 h-5"></i>
+          </button>
         </div>
 
-        <!-- Mobile Menu Navigation -->
-        <div id="mobile-menu" class="hidden md:hidden glass-card border-t border-white/10 px-4 pt-2 pb-6 space-y-3">
-            <a href="#hero" class="block px-3 py-2 rounded-lg hover:bg-purple-900/30 font-medium">Kezdőlap</a>
-            <a href="#store" class="block px-3 py-2 rounded-lg bg-amber-500/10 text-amber-300 font-bold">VoidCoin Bolt</a>
-            <a href="#ranks-info" class="block px-3 py-2 rounded-lg hover:bg-purple-900/30 font-medium">Rangok Leírása</a>
-            <a href="#staff" class="block px-3 py-2 rounded-lg hover:bg-purple-900/30 font-medium">Vezetőség</a>
-            <a href="#platforms" class="block px-3 py-2 rounded-lg hover:bg-purple-900/30 font-medium">Platformok</a>
-            <button onclick="openRulesModal()" class="w-full text-left px-3 py-2 rounded-lg hover:bg-purple-900/30 font-medium">Szabályzat</button>
-            <button onclick="openCartModal()" class="w-full py-2.5 bg-amber-500/20 text-amber-300 font-bold rounded-xl border border-amber-500/30 flex items-center justify-center gap-2">
-                <i data-lucide="shopping-cart" class="w-4 h-4"></i> Kosár Megtekintése (<span id="mobile-cart-badge">0</span>)
-            </button>
-            <div id="mobile-auth-container" class="pt-2">
-                <button onclick="openAuthModal('login')" class="w-full py-2.5 bg-void-800 rounded-xl font-bold text-center text-white text-sm border border-white/10 flex items-center justify-center gap-2">
-                    <i data-lucide="user" class="w-4 h-4 text-purple-400"></i> Bejelentkezés / Regisztráció
-                </button>
-            </div>
-            <button onclick="copyIpAddress()" class="w-full mt-2 py-3 theme-btn-primary rounded-xl font-bold flex items-center justify-center gap-2 text-white">
-                <i data-lucide="copy" class="w-4 h-4"></i> IP Másolása (play.voidsmp.net)
-            </button>
+        <div id="mobile-menu" class="mobile-menu md:hidden overflow-hidden">
+          <div class="pb-4 pt-2 space-y-2 border-t" style="border-color: var(--line);">
+            <a href="#hero" class="block px-3 py-2 rounded-lg hover:bg-white/40 font-medium nav-link">Kezdőlap</a>
+            <a href="#store" class="block px-3 py-2 rounded-lg hover:bg-white/40 font-medium nav-link">VoidCoin Bolt</a>
+            <a href="#ranks-info" class="block px-3 py-2 rounded-lg hover:bg-white/40 font-medium nav-link">Rangok</a>
+            <a href="#staff" class="block px-3 py-2 rounded-lg hover:bg-white/40 font-medium nav-link">Vezetőség</a>
+            <a href="#platforms" class="block px-3 py-2 rounded-lg hover:bg-white/40 font-medium nav-link">Platformok</a>
+            <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-white/40 font-medium nav-link" onclick="openRulesModal()">Szabályzat</button>
+            <button class="w-full rounded-xl py-2.5 mt-2 font-semibold soft-shell" onclick="openCartModal()">Kosár megtekintése</button>
+            <button class="w-full rounded-xl py-2.5 mt-2 font-semibold glass-button" onclick="openAuthModal('login')">Bejelentkezés</button>
+          </div>
         </div>
+      </div>
     </header>
 
-    <!-- Main Content -->
-    <main class="relative z-10 space-y-28 pb-20">
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+      <section id="hero" class="relative pt-16 sm:pt-20 lg:pt-24">
+        <div class="hero-ring"></div>
+        <div class="mx-auto max-w-4xl text-center">
+          <div class="inline-flex items-center gap-3 px-4 py-2 theme-pill rounded-full text-sm font-semibold text-[var(--text-soft)]">
+            <span class="hud-dot"></span>
+            Minecraft 1.20.x SMP szerver online
+          </div>
 
-        <!-- Hero Section -->
-        <section id="hero" class="relative pt-16 lg:pt-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center flex flex-col items-center">
-            
-            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card text-xs font-semibold text-gray-300 mb-8 animate-float">
-                <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
-                <span>Minecraft 1.20.x SMP Szerver Online!</span>
+          <h1 class="mt-8 text-4xl sm:text-5xl lg:text-7xl font-black tracking-[-0.06em] leading-none text-[var(--text)]">
+            Lépj be a <span class="gradient-text">VoidSMP</span><br />végtelen világába.
+          </h1>
+
+          <p class="mt-6 mx-auto max-w-2xl text-lg text-[var(--text-soft)] leading-relaxed">
+            Vásárolj <span class="font-bold text-amber-500">VoidCoin-t</span>, és nyiss meg rangokat, kozmetikai tárgyakat és exkluzív játékbeli előnyöket.
+          </p>
+
+          <div class="mt-8 flex flex-wrap justify-center gap-3">
+            <button class="glass-button rounded-xl px-6 py-3 text-sm font-bold shadow-lg" onclick="copyIpAddress()">IP másolása</button>
+            <a href="#store" class="soft-shell rounded-xl px-6 py-3 text-sm font-bold text-[var(--text)]">VoidCoin csomagok</a>
+            <a href="https://discord.gg/DUVwTrQhS3" target="_blank" rel="noreferrer" class="soft-shell rounded-xl px-6 py-3 text-sm font-bold text-[var(--text)]">Discord</a>
+          </div>
+
+          <div class="mt-10 mx-auto max-w-xl section-shell rounded-[28px] p-4 sm:p-5 shadow-glow">
+            <div class="flex items-center justify-between gap-3 flex-wrap">
+              <div class="flex items-center gap-3 min-w-0">
+                <div class="w-12 h-12 rounded-2xl brand-mark flex items-center justify-center text-white">
+                  <i data-lucide="server" class="w-5 h-5"></i>
+                </div>
+                <div class="text-left min-w-0">
+                  <div class="text-[10px] uppercase tracking-[0.18em] text-[var(--muted)] font-bold">Szerver IP</div>
+                  <div class="font-mono text-base sm:text-lg font-black text-[var(--text)] break-all">212.73.137.207:40003</div>
+                </div>
+              </div>
+              <button id="copy-btn" class="glass-button rounded-xl px-5 py-3 text-sm font-black" onclick="copyIpAddress()">
+                Másolás
+              </button>
             </div>
-
-            <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-white max-w-4xl leading-tight">
-                Lépj be a <span class="gradient-theme-text animate-glow">VoidSMP</span> Végtelen Világába!
-            </h1>
-
-            <p class="mt-6 text-lg sm:text-xl text-gray-300 max-w-2xl font-light leading-relaxed">
-                Vásárolj <span class="text-amber-400 font-bold">VoidCoint</span>, és nyiss meg rangokat, kozmetikai tárgyakat és egyedi extrákat közvetlenül a játékban!
-            </p>
-
-            <!-- IP Box -->
-            <div class="mt-10 w-full max-w-md">
-                <div class="glass-card p-3 rounded-2xl flex items-center justify-between gap-3 shadow-2xl">
-                    <div class="flex items-center gap-3 pl-3">
-                        <div class="p-2.5 rounded-xl bg-void-800 text-purple-400">
-                            <i data-lucide="server" class="w-6 h-6"></i>
-                        </div>
-                        <div class="text-left">
-                            <p class="text-[10px] uppercase tracking-wider text-gray-400 font-bold">Szerver IP Cím</p>
-                            <p class="font-mono font-bold text-lg sm:text-xl text-cyan-400">212.73.137.207:40003</p>
-                        </div>
-                    </div>
-                    <button id="copy-btn" onclick="copyIpAddress()" class="px-5 py-3 theme-btn-primary font-bold rounded-xl transition-all shadow-lg flex items-center gap-2 text-sm sm:text-base active:scale-95">
-                        <i data-lucide="copy" class="w-4 h-4"></i>
-                        <span id="copy-text">Másolás</span>
-                    </button>
-                </div>
-                <p id="toast-msg" class="opacity-0 transition-opacity duration-300 text-xs text-emerald-400 font-semibold mt-2">
-                    ✓ IP cím sikeresen másolva a vágólapra!
-                </p>
+            <div id="toast-msg" class="mt-3 text-sm font-semibold text-emerald-600 opacity-0 transition-opacity">
+              ✓ IP sikeresen a vágólapra másolva.
             </div>
+          </div>
+        </div>
+      </section>
 
-            <!-- Quick Action Links -->
-            <div class="mt-6 flex flex-wrap gap-4 justify-center">
-                <a href="https://discord.gg/DUVwTrQhS3" target="_blank" class="px-6 py-3 rounded-xl bg-indigo-600/30 hover:bg-indigo-600/50 text-indigo-200 font-semibold text-sm border border-indigo-500/40 flex items-center gap-2 transition-all shadow-lg shadow-indigo-900/20">
-                    <i data-lucide="message-square" class="w-4 h-4 text-indigo-400"></i> Discord Szerver
-                </a>
-                <a href="#store" class="px-6 py-3 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-slate-950 font-black text-sm shadow-lg shadow-amber-500/20 flex items-center gap-2 transition-all">
-                    <i data-lucide="coins" class="w-4 h-4"></i> VoidCoin Csomagok
-                </a>
+      <section id="store" class="mt-24">
+        <div class="text-center max-w-2xl mx-auto">
+          <div class="inline-flex items-center rounded-full chip px-4 py-1.5 text-xs font-bold uppercase tracking-[0.18em]">Hivatalos webáruház</div>
+          <h2 class="mt-6 text-3xl sm:text-5xl font-black tracking-[-0.05em] text-[var(--text)]">Vásárolj <span class="gold-text">VoidCoin-t</span></h2>
+          <p class="mt-4 text-[var(--text-soft)] text-base">A VoidCoin a szerver prémium fizetőeszköze. A megvásárolt érmék azonnal jóváíródnak a Minecraft fiókodon.</p>
+        </div>
+
+        <div class="mt-12 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+          <article class="section-shell card-hover rounded-[30px] p-6 flex flex-col justify-between">
+            <div>
+              <div class="w-14 h-14 rounded-2xl bg-amber-500/15 text-amber-500 flex items-center justify-center mb-5">
+                <i data-lucide="coins" class="w-7 h-7"></i>
+              </div>
+              <h3 class="text-2xl font-black text-[var(--text)]">1.500 VoidCoin</h3>
+              <p class="mt-1 text-sm text-[var(--muted)]">Kezdő érme csomag</p>
+              <div class="mt-6 mb-5 text-4xl font-black text-amber-500">1.000<span class="text-base font-medium text-[var(--muted)]"> Ft</span></div>
+              <ul class="space-y-3 text-sm text-[var(--text-soft)]">
+                <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500"></i> Azonnali jóváírás</li>
+                <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500"></i> Kész a kezdéshez</li>
+                <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500"></i> Bármikor elkölthető</li>
+              </ul>
             </div>
-        </section>
+            <button class="mt-6 glass-button rounded-xl py-3 text-sm font-black" onclick="addToCart('1500_vc','1.500 VoidCoin Csomag',1000,1500)">Kosárba (1.000 Ft)</button>
+          </article>
 
-        <!-- VOIDCOIN STORE SECTION -->
-        <section id="store" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <span class="px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-full bg-amber-900/40 text-amber-300 border border-amber-500/30">Hivatalos Webáruház</span>
-                <h2 class="text-3xl sm:text-5xl font-black text-white mt-3">Vásárolj <span class="gradient-gold-text">VoidCoint</span></h2>
-                <p class="text-gray-400 mt-2 text-sm sm:text-base max-w-xl mx-auto">A VoidCoin a szerver prémium fizetőeszköze. A megvásárolt érmék azonnal jóváíródnak a Minecraft fiókodon!</p>
+          <article class="section-shell card-hover rounded-[30px] p-6 flex flex-col justify-between">
+            <div>
+              <div class="w-14 h-14 rounded-2xl bg-amber-500/15 text-amber-500 flex items-center justify-center mb-5">
+                <i data-lucide="gem" class="w-7 h-7"></i>
+              </div>
+              <h3 class="text-2xl font-black text-[var(--text)]">3.500 VoidCoin</h3>
+              <p class="mt-1 text-sm text-[var(--muted)]">+500 bónusz</p>
+              <div class="mt-6 mb-5 text-4xl font-black text-amber-500">2.000<span class="text-base font-medium text-[var(--muted)]"> Ft</span></div>
+              <ul class="space-y-3 text-sm text-[var(--text-soft)]">
+                <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500"></i> Közvetlen jóváírás</li>
+                <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500"></i> Comet ranghoz elegendő</li>
+                <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500"></i> Exkluzív prémium tartalom</li>
+              </ul>
             </div>
+            <button class="mt-6 glass-button rounded-xl py-3 text-sm font-black" onclick="addToCart('3500_vc','3.500 VoidCoin Csomag',2000,3500)">Kosárba (2.000 Ft)</button>
+          </article>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-
-                <!-- PACKAGE 1 -->
-                <div class="glass-card rounded-3xl p-6 flex flex-col justify-between relative group hover:border-amber-500/60 hover:-translate-y-2">
-                    <div>
-                        <div class="w-14 h-14 rounded-2xl bg-amber-500/20 text-amber-400 flex items-center justify-center mb-4 font-bold border border-amber-500/30">
-                            <i data-lucide="coins" class="w-8 h-8"></i>
-                        </div>
-                        <h3 class="text-2xl font-black text-white">1,500 VoidCoin</h3>
-                        <p class="text-xs text-gray-400 mt-1">Kezdő Érme Csomag</p>
-
-                        <div class="my-6">
-                            <span class="text-3xl font-extrabold text-amber-400">1,000</span>
-                            <span class="text-sm font-medium text-gray-400"> Ft</span>
-                        </div>
-
-                        <ul class="space-y-3 text-sm text-gray-300 mb-8">
-                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> Instant jóváírás a szerveren</li>
-                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> Elegendő /kit feloldásokhoz</li>
-                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> Bármikor elkölthető in-game</li>
-                        </ul>
-                    </div>
-
-                    <button onclick="addToCart('1500_vc', '1,500 VoidCoin Csomag', 1000, 1500)" class="w-full py-3 px-4 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black transition-all text-sm flex items-center justify-center gap-2 shadow-lg shadow-amber-500/20">
-                        <i data-lucide="shopping-cart" class="w-4 h-4"></i> Kosárba (1,000 Ft)
-                    </button>
-                </div>
-
-                <!-- PACKAGE 2 -->
-                <div class="glass-card rounded-3xl p-6 flex flex-col justify-between relative group hover:border-amber-500/60 hover:-translate-y-2">
-                    <div>
-                        <div class="w-14 h-14 rounded-2xl bg-amber-500/20 text-amber-400 flex items-center justify-center mb-4 font-bold border border-amber-500/30">
-                            <i data-lucide="coins" class="w-8 h-8"></i>
-                        </div>
-                        <h3 class="text-2xl font-black text-white">3,500 VoidCoin</h3>
-                        <p class="text-xs text-amber-400 font-semibold mt-1">+500 Bónusz Érme!</p>
-
-                        <div class="my-6">
-                            <span class="text-3xl font-extrabold text-amber-400">2,000</span>
-                            <span class="text-sm font-medium text-gray-400"> Ft</span>
-                        </div>
-
-                        <ul class="space-y-3 text-sm text-gray-300 mb-8">
-                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> Instant jóváírás</li>
-                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> Comet Rang megvásárolható belőle!</li>
-                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> Exkluzív kulcsok és kozmetikák</li>
-                        </ul>
-                    </div>
-
-                    <button onclick="addToCart('3500_vc', '3,500 VoidCoin Csomag', 2000, 3500)" class="w-full py-3 px-4 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black transition-all text-sm flex items-center justify-center gap-2 shadow-lg shadow-amber-500/20">
-                        <i data-lucide="shopping-cart" class="w-4 h-4"></i> Kosárba (2,000 Ft)
-                    </button>
-                </div>
-
-                <!-- PACKAGE 3 -->
-                <div class="glass-card rounded-3xl p-6 flex flex-col justify-between relative group hover:border-amber-500/60 hover:-translate-y-2">
-                    <div>
-                        <div class="w-14 h-14 rounded-2xl bg-amber-500/20 text-amber-400 flex items-center justify-center mb-4 font-bold border border-amber-500/30">
-                            <i data-lucide="gem" class="w-8 h-8"></i>
-                        </div>
-                        <h3 class="text-2xl font-black text-white">8,500 VoidCoin</h3>
-                        <p class="text-xs text-amber-400 font-semibold mt-1">+1,500 Bónusz Érme!</p>
-
-                        <div class="my-6">
-                            <span class="text-3xl font-extrabold text-amber-400">4,500</span>
-                            <span class="text-sm font-medium text-gray-400"> Ft</span>
-                        </div>
-
-                        <ul class="space-y-3 text-sm text-gray-300 mb-8">
-                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> Instant jóváírás</li>
-                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> Eclipse Rang megvásárolható belőle!</li>
-                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> Haladó VIP státuszokhoz</li>
-                        </ul>
-                    </div>
-
-                    <button onclick="addToCart('8500_vc', '8,500 VoidCoin Csomag', 4500, 8500)" class="w-full py-3 px-4 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black transition-all text-sm flex items-center justify-center gap-2 shadow-lg shadow-amber-500/20">
-                        <i data-lucide="shopping-cart" class="w-4 h-4"></i> Kosárba (4,500 Ft)
-                    </button>
-                </div>
-
-                <!-- PACKAGE 4 (ULTIMATE 20,000 + 1,500 BONUS FOR 9,900 FT) -->
-                <div class="glass-card rounded-3xl p-6 flex flex-col justify-between relative group border-2 border-purple-500 shadow-2xl shadow-purple-500/20 hover:-translate-y-2">
-                    <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-purple-500 to-pink-500 text-white text-[10px] uppercase font-black px-4 py-1 rounded-full tracking-wider shadow-md">
-                        LEGJOBB AJÁNLAT - MEGASOUM
-                    </div>
-
-                    <div>
-                        <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-purple-500 to-pink-500 text-white flex items-center justify-center mb-4 font-bold shadow-lg shadow-purple-500/30">
-                            <i data-lucide="sparkles" class="w-8 h-8"></i>
-                        </div>
-                        <h3 class="text-2xl font-black text-white">20,000 VoidCoin</h3>
-                        <p class="text-xs text-pink-400 font-black mt-1">+1,500 EXTRA BÓNUSZ! (21,500 VC)</p>
-
-                        <div class="my-6">
-                            <span class="text-3xl font-extrabold text-purple-300">9,900</span>
-                            <span class="text-sm font-medium text-gray-400"> Ft</span>
-                        </div>
-
-                        <ul class="space-y-3 text-sm text-gray-300 mb-8">
-                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> Bármelyik in-game rang megvehető belőle!</li>
-                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> Elég a teljes <strong class="text-pink-400">VOID Rang</strong> kioldásához (20,000 VC)</li>
-                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> +1,500 Extra ingyen VoidCoin megmarad egyéb dolgokra</li>
-                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> Instant jóváírás a szerveren</li>
-                        </ul>
-                    </div>
-
-                    <button onclick="addToCart('20000_vc', '20,000 + 1,500 EXTRA VoidCoin Megacsomag', 9900, 21500)" class="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-black transition-all text-sm flex items-center justify-center gap-2 shadow-xl shadow-purple-600/30">
-                        <i data-lucide="shopping-cart" class="w-4 h-4"></i> Kosárba (9,900 Ft)
-                    </button>
-                </div>
-
+          <article class="section-shell card-hover rounded-[30px] p-6 flex flex-col justify-between">
+            <div>
+              <div class="w-14 h-14 rounded-2xl bg-sky-500/15 text-sky-500 flex items-center justify-center mb-5">
+                <i data-lucide="sparkles" class="w-7 h-7"></i>
+              </div>
+              <h3 class="text-2xl font-black text-[var(--text)]">8.500 VoidCoin</h3>
+              <p class="mt-1 text-sm text-[var(--muted)]">+1.500 bónusz</p>
+              <div class="mt-6 mb-5 text-4xl font-black text-amber-500">4.500<span class="text-base font-medium text-[var(--muted)]"> Ft</span></div>
+              <ul class="space-y-3 text-sm text-[var(--text-soft)]">
+                <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500"></i> Hosszú távú érték</li>
+                <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500"></i> Eclipse ranghoz elegendő</li>
+                <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500"></i> Premium élmény</li>
+              </ul>
             </div>
-        </section>
+            <button class="mt-6 glass-button rounded-xl py-3 text-sm font-black" onclick="addToCart('8500_vc','8.500 VoidCoin Csomag',4500,8500)">Kosárba (4.500 Ft)</button>
+          </article>
 
-        <!-- RANKS INFORMATIONAL GUIDE SECTION -->
-        <section id="ranks-info" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <span class="px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-full bg-purple-900/50 text-purple-300 border border-purple-500/30">Szerver Rangok</span>
-                <h2 class="text-3xl sm:text-5xl font-black text-white mt-3">Rangok És <span class="gradient-theme-text">Előnyök</span></h2>
-                <p class="text-gray-400 mt-3 max-w-2xl mx-auto text-sm sm:text-base">
-                    A szerveren lévő rangokat nem közvetlen készpénzért, hanem a megvásárolt <span class="text-amber-400 font-bold">VoidCoin-ért</span> tudod feloldani a játékban az <code class="bg-void-950 px-2 py-1 rounded text-purple-400 font-mono">/ranks</code> parancssal!
-                </p>
+          <article class="section-shell card-hover border-2 rounded-[30px] p-6 flex flex-col justify-between" style="border-color: rgba(139,92,246,0.28); box-shadow: 0 24px 50px rgba(139,92,246,0.16);">
+            <div class="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-gradient-to-r from-violet-500 to-pink-500 text-white text-[10px] font-black px-4 py-1 tracking-[0.18em] uppercase">Legjobb ajánlat</div>
+            <div>
+              <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-violet-500 to-pink-500 text-white flex items-center justify-center mb-5 shadow-lg shadow-violet-500/30">
+                <i data-lucide="sparkles" class="w-7 h-7"></i>
+              </div>
+              <h3 class="text-2xl font-black text-[var(--text)]">20.000 VoidCoin</h3>
+              <p class="mt-1 text-sm text-pink-500 font-black">+1.500 extra bónusz</p>
+              <div class="mt-6 mb-5 text-4xl font-black text-violet-500">9.900<span class="text-base font-medium text-[var(--muted)]"> Ft</span></div>
+              <ul class="space-y-3 text-sm text-[var(--text-soft)]">
+                <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500"></i> Bármelyik rang megvehető</li>
+                <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500"></i> Elég a teljes VOID ranghoz</li>
+                <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500"></i> +1.500 VC maradék</li>
+              </ul>
             </div>
+            <button class="mt-6 glass-button rounded-xl py-3 text-sm font-black" onclick="addToCart('20000_vc','20.000 + 1.500 EXTRA VoidCoin Csomag',9900,21500)">Kosárba (9.900 Ft)</button>
+          </article>
+        </div>
+      </section>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <section id="ranks-info" class="mt-24">
+        <div class="text-center max-w-2xl mx-auto">
+          <div class="inline-flex items-center rounded-full chip px-4 py-1.5 text-xs font-bold uppercase tracking-[0.18em]">Szerver rangok</div>
+          <h2 class="mt-6 text-3xl sm:text-5xl font-black tracking-[-0.05em] text-[var(--text)]">Rangok és <span class="gradient-text">előnyök</span></h2>
+        </div>
 
-                <!-- COMET RANK INFO -->
-                <div class="glass-card rounded-3xl p-6 flex flex-col justify-between relative border border-blue-500/20">
-                    <div>
-                        <div class="flex items-center justify-between mb-4">
-                            <div class="w-12 h-12 rounded-2xl bg-blue-900/40 text-blue-400 flex items-center justify-center font-bold border border-blue-500/20">
-                                <i data-lucide="zap" class="w-6 h-6"></i>
-                            </div>
-                            <span class="px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 font-black text-xs border border-amber-500/30">3,000 VoidCoin</span>
-                        </div>
-                        <h3 class="text-2xl font-black text-white">COMET</h3>
-                        <p class="text-xs text-blue-400 font-medium mt-1">Kezdő VIP Rang</p>
-
-                        <div class="my-4 border-t border-white/10 pt-4">
-                            <p class="text-xs text-gray-400 leading-relaxed mb-4">Kiváló választás a kezdő játékosoknak, akik extra otthon pontokat és kényelmi funkciókat szeretnének.</p>
-                            <ul class="space-y-2.5 text-xs text-gray-300">
-                                <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i> [Comet] előtag a chaten</li>
-                                <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i> 3x Otthon pont (/sethome)</li>
-                                <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i> /hat hordozható kalap</li>
-                                <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i> Napi 1x Comet Kit</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <a href="#store" class="mt-4 w-full py-2.5 px-4 rounded-xl bg-blue-950/60 text-blue-300 hover:text-white font-bold border border-blue-500/30 text-xs text-center block transition-all">
-                        VoidCoin Szerzése
-                    </a>
-                </div>
-
-                <!-- ECLIPSE RANK INFO -->
-                <div class="glass-card rounded-3xl p-6 flex flex-col justify-between relative border border-purple-500/20">
-                    <div>
-                        <div class="flex items-center justify-between mb-4">
-                            <div class="w-12 h-12 rounded-2xl bg-purple-900/40 text-purple-400 flex items-center justify-center font-bold border border-purple-500/20">
-                                <i data-lucide="moon" class="w-6 h-6"></i>
-                            </div>
-                            <span class="px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 font-black text-xs border border-amber-500/30">7,000 VoidCoin</span>
-                        </div>
-                        <h3 class="text-2xl font-black text-white">ECLIPSE</h3>
-                        <p class="text-xs text-purple-400 font-medium mt-1">Haladó VIP Rang</p>
-
-                        <div class="my-4 border-t border-white/10 pt-4">
-                            <p class="text-xs text-gray-400 leading-relaxed mb-4">Bővített jogkörök, automatikus tárgy-megmentés és több aukciós slot a piacon.</p>
-                            <ul class="space-y-2.5 text-xs text-gray-300">
-                                <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i> Összes Comet jogkör</li>
-                                <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i> [Eclipse] előtag & színezés</li>
-                                <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i> 6x Otthon pont</li>
-                                <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i> /workbench hordozható munkaasztal</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <a href="#store" class="mt-4 w-full py-2.5 px-4 rounded-xl bg-purple-950/60 text-purple-300 hover:text-white font-bold border border-purple-500/30 text-xs text-center block transition-all">
-                        VoidCoin Szerzése
-                    </a>
-                </div>
-
-                <!-- NEBULA RANK INFO -->
-                <div class="glass-card rounded-3xl p-6 flex flex-col justify-between relative border border-cyan-500/40">
-                    <div>
-                        <div class="flex items-center justify-between mb-4">
-                            <div class="w-12 h-12 rounded-2xl bg-cyan-900/40 text-cyan-400 flex items-center justify-center font-bold border border-cyan-500/20">
-                                <i data-lucide="orbit" class="w-6 h-6"></i>
-                            </div>
-                            <span class="px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 font-black text-xs border border-amber-500/30">12,000 VoidCoin</span>
-                        </div>
-                        <h3 class="text-2xl font-black text-white">NEBULA</h3>
-                        <p class="text-xs text-cyan-400 font-medium mt-1">Kiemelt VIP Rang</p>
-
-                        <div class="my-4 border-t border-white/10 pt-4">
-                            <p class="text-xs text-gray-400 leading-relaxed mb-4">Prémium funkciók: Repülés a lobbiban, virtuális ládák és villámgyors teleportáció.</p>
-                            <ul class="space-y-2.5 text-xs text-gray-300">
-                                <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i> Összes Eclipse jogkör</li>
-                                <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i> Repülés a Lobbimban (/fly)</li>
-                                <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i> 12x Otthon pont</li>
-                                <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i> /enderchest hordozható e-chest</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <a href="#store" class="mt-4 w-full py-2.5 px-4 rounded-xl bg-cyan-950/60 text-cyan-300 hover:text-white font-bold border border-cyan-500/30 text-xs text-center block transition-all">
-                        VoidCoin Szerzése
-                    </a>
-                </div>
-
-                <!-- VOID RANK INFO (EXACTLY 20,000 VOIDCOIN) -->
-                <div class="glass-card rounded-3xl p-6 flex flex-col justify-between relative border-2 border-pink-500/60 shadow-xl shadow-pink-500/10">
-                    <div>
-                        <div class="flex items-center justify-between mb-4">
-                            <div class="w-12 h-12 rounded-2xl bg-pink-900/40 text-pink-400 flex items-center justify-center font-bold border border-pink-500/20">
-                                <i data-lucide="crown" class="w-6 h-6"></i>
-                            </div>
-                            <span class="px-3 py-1 rounded-full bg-gradient-to-r from-amber-500 to-yellow-400 text-slate-950 font-black text-xs shadow-md">20,000 VoidCoin</span>
-                        </div>
-                        <h3 class="text-2xl font-black text-white">VOID</h3>
-                        <p class="text-xs text-pink-400 font-medium mt-1">Legmagasabb Kozmikus Rang</p>
-
-                        <div class="my-4 border-t border-white/10 pt-4">
-                            <p class="text-xs text-gray-400 leading-relaxed mb-4">A szerver leghatalmasabb rangja, animált színváltós névvel és korlátlan lehetőségekkel!</p>
-                            <ul class="space-y-2.5 text-xs text-gray-300">
-                                <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i> ÖSSZES alsóbb rang perkje</li>
-                                <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i> Animált RGB [VOID] tag</li>
-                                <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i> Végtelen Otthon pontok</li>
-                                <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i> /feed és /heal parancsok</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <a href="#store" class="mt-4 w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-500 hover:to-purple-500 text-white font-black text-xs text-center block transition-all shadow-lg shadow-pink-600/30">
-                        20,000 VC Szerzése
-                    </a>
-                </div>
-
+        <div class="mt-12 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+          <article class="section-shell card-hover rounded-[30px] p-5">
+            <div class="flex items-center justify-between mb-4">
+              <div class="w-12 h-12 rounded-2xl bg-blue-500/10 text-blue-500 flex items-center justify-center"><i data-lucide="zap" class="w-5 h-5"></i></div>
+              <span class="chip rounded-full px-2.5 py-1 text-[10px] font-black uppercase">3.000 VC</span>
             </div>
-        </section>
+            <h3 class="text-2xl font-black text-[var(--text)]">COMET</h3>
+            <p class="mt-1 text-sm text-blue-500 font-semibold">Kezdő VIP rang</p>
+            <ul class="mt-5 space-y-3 text-sm text-[var(--text-soft)]">
+              <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500"></i> [Comet] előtag</li>
+              <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500"></i> 3x otthon pont</li>
+              <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500"></i> /hat kalap</li>
+              <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500"></i> Napi 1x Comet kit</li>
+            </ul>
+            <a href="#store" class="mt-6 block rounded-xl border border-blue-500/20 bg-blue-500/5 text-center text-sm font-bold text-blue-500 py-2.5">VoidCoin szerzése</a>
+          </article>
 
-        <!-- Features Grid -->
-        <section id="features" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
-                <span class="px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-full bg-cyan-900/40 text-cyan-300 border border-cyan-500/30">Miért Mi?</span>
-                <h2 class="text-3xl sm:text-5xl font-black text-white mt-3">Szerver <span class="gradient-theme-text">Jellemzők</span></h2>
-                <p class="text-gray-400 mt-2 text-sm sm:text-base">Prémium funkciók a felhőtlen élményért</p>
+          <article class="section-shell card-hover rounded-[30px] p-5">
+            <div class="flex items-center justify-between mb-4">
+              <div class="w-12 h-12 rounded-2xl bg-violet-500/10 text-violet-500 flex items-center justify-center"><i data-lucide="moon" class="w-5 h-5"></i></div>
+              <span class="chip rounded-full px-2.5 py-1 text-[10px] font-black uppercase">7.000 VC</span>
             </div>
+            <h3 class="text-2xl font-black text-[var(--text)]">ECLIPSE</h3>
+            <p class="mt-1 text-sm text-violet-500 font-semibold">Haladó VIP rang</p>
+            <ul class="mt-5 space-y-3 text-sm text-[var(--text-soft)]">
+              <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500"></i> Minden Comet előny</li>
+              <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500"></i> [Eclipse] tag</li>
+              <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500"></i> 6x otthon pont</li>
+              <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500"></i> /workbench</li>
+            </ul>
+            <a href="#store" class="mt-6 block rounded-xl border border-violet-500/20 bg-violet-500/5 text-center text-sm font-bold text-violet-500 py-2.5">VoidCoin szerzése</a>
+          </article>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="glass-card p-6 rounded-2xl relative overflow-hidden group hover:-translate-y-1">
-                    <div class="w-12 h-12 rounded-xl bg-purple-900/40 text-purple-400 flex items-center justify-center mb-4 border border-purple-500/20">
-                        <i data-lucide="coins" class="w-6 h-6"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-white mb-2">Egyedi Gazdaság</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">Kereskedj játékostársaiddal, hozz létre saját boltot, aukciókat és építsd fel a saját vagyondat.</p>
-                </div>
-
-                <div class="glass-card p-6 rounded-2xl relative overflow-hidden group hover:-translate-y-1">
-                    <div class="w-12 h-12 rounded-xl bg-cyan-900/40 text-cyan-400 flex items-center justify-center mb-4 border border-cyan-500/20">
-                        <i data-lucide="shield" class="w-6 h-6"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-white mb-2">Területvédelem (Claim)</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">Garantált biztonság az építményeidnek! Hozz létre saját védett területeket egyetlen kattintással.</p>
-                </div>
-
-                <div class="glass-card p-6 rounded-2xl relative overflow-hidden group hover:-translate-y-1">
-                    <div class="w-12 h-12 rounded-xl bg-pink-900/40 text-pink-400 flex items-center justify-center mb-4 border border-pink-500/20">
-                        <i data-lucide="sparkles" class="w-6 h-6"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-white mb-2">Egyedi Enchantok & Questek</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">Különleges varázslatok, heti küldetések és kozmikus jutalmak várnak a legaktívabb játékosokra.</p>
-                </div>
+          <article class="section-shell card-hover rounded-[30px] p-5">
+            <div class="flex items-center justify-between mb-4">
+              <div class="w-12 h-12 rounded-2xl bg-cyan-500/10 text-cyan-500 flex items-center justify-center"><i data-lucide="orbit" class="w-5 h-5"></i></div>
+              <span class="chip rounded-full px-2.5 py-1 text-[10px] font-black uppercase">12.000 VC</span>
             </div>
-        </section>
+            <h3 class="text-2xl font-black text-[var(--text)]">NEBULA</h3>
+            <p class="mt-1 text-sm text-cyan-500 font-semibold">Kiemelt VIP rang</p>
+            <ul class="mt-5 space-y-3 text-sm text-[var(--text-soft)]">
+              <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500"></i> Minden Eclipse előny</li>
+              <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500"></i> /fly a lobbiban</li>
+              <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500"></i> 12x otthon pont</li>
+              <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500"></i> /enderchest</li>
+            </ul>
+            <a href="#store" class="mt-6 block rounded-xl border border-cyan-500/20 bg-cyan-500/5 text-center text-sm font-bold text-cyan-500 py-2.5">VoidCoin szerzése</a>
+          </article>
 
-        <!-- Dynamic Live Server Stats -->
-        <section id="stats" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- Players Online -->
-                <div class="glass-card p-6 rounded-2xl relative">
-                    <div class="flex items-center justify-between mb-4">
-                        <span class="text-xs uppercase tracking-wider font-semibold text-gray-400">Játékosok Online</span>
-                        <div class="p-2.5 rounded-xl bg-purple-900/30 text-purple-400">
-                            <i data-lucide="users" class="w-5 h-5"></i>
-                        </div>
-                    </div>
-                    <div class="flex items-baseline gap-2">
-                        <span id="player-count" class="text-4xl font-extrabold text-white">154</span>
-                        <span class="text-gray-400 font-medium text-sm">/ 300</span>
-                    </div>
-                    <div class="w-full bg-void-950 rounded-full h-2 mt-4 overflow-hidden">
-                        <div id="player-bar" class="bg-gradient-to-r from-purple-500 to-cyan-400 h-2 rounded-full transition-all duration-500" style="width: 51.3%"></div>
-                    </div>
-                </div>
-
-                <!-- Server Status -->
-                <div class="glass-card p-6 rounded-2xl relative">
-                    <div class="flex items-center justify-between mb-4">
-                        <span class="text-xs uppercase tracking-wider font-semibold text-gray-400">Szerver Állapot</span>
-                        <div class="p-2.5 rounded-xl bg-emerald-900/30 text-emerald-400">
-                            <i data-lucide="power" class="w-5 h-5"></i>
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-3">
-                        <span class="relative flex h-4 w-4">
-                          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                          <span class="relative inline-flex rounded-full h-4 w-4 bg-emerald-500"></span>
-                        </span>
-                        <span class="text-2xl font-bold text-emerald-400">ONLINE</span>
-                    </div>
-                    <p class="text-xs text-gray-400 mt-4">Uptime: <span class="text-gray-200 font-medium">99.99%</span></p>
-                </div>
-
-                <!-- TPS Performance -->
-                <div class="glass-card p-6 rounded-2xl relative">
-                    <div class="flex items-center justify-between mb-4">
-                        <span class="text-xs uppercase tracking-wider font-semibold text-gray-400">Teljesítmény (TPS)</span>
-                        <div class="p-2.5 rounded-xl bg-cyan-900/30 text-cyan-400">
-                            <i data-lucide="cpu" class="w-5 h-5"></i>
-                        </div>
-                    </div>
-                    <div class="flex items-baseline gap-2">
-                        <span id="tps-val" class="text-4xl font-extrabold text-white">19.99</span>
-                        <span class="text-xs text-emerald-400 font-semibold">/ 20.0</span>
-                    </div>
-                    <p class="text-xs text-gray-400 mt-4">Ping: <span id="ping-val" class="text-cyan-400 font-bold">14 ms</span></p>
-                </div>
-
-                <!-- Registered Players -->
-                <div class="glass-card p-6 rounded-2xl relative">
-                    <div class="flex items-center justify-between mb-4">
-                        <span class="text-xs uppercase tracking-wider font-semibold text-gray-400">Regisztráltak</span>
-                        <div class="p-2.5 rounded-xl bg-indigo-900/30 text-indigo-400">
-                            <i data-lucide="award" class="w-5 h-5"></i>
-                        </div>
-                    </div>
-                    <span class="text-4xl font-extrabold text-white">19,250+</span>
-                    <p class="text-xs text-gray-400 mt-4">Növekvő közösség</p>
-                </div>
+          <article class="section-shell card-hover rounded-[30px] p-5 border-2" style="border-color: rgba(236,72,153,0.28);">
+            <div class="flex items-center justify-between mb-4">
+              <div class="w-12 h-12 rounded-2xl bg-pink-500/10 text-pink-500 flex items-center justify-center"><i data-lucide="crown" class="w-5 h-5"></i></div>
+              <span class="rounded-full px-2.5 py-1 text-[10px] font-black uppercase text-slate-950 bg-gradient-to-r from-amber-400 to-yellow-300">20.000 VC</span>
             </div>
-        </section>
+            <h3 class="text-2xl font-black text-[var(--text)]">VOID</h3>
+            <p class="mt-1 text-sm text-pink-500 font-semibold">Legmagasabb kozmosz rang</p>
+            <ul class="mt-5 space-y-3 text-sm text-[var(--text-soft)]">
+              <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500"></i> Minden alsóbb rang</li>
+              <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500"></i> RGB [VOID] tag</li>
+              <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500"></i> Végtelen otthon pont</li>
+              <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500"></i> /feed és /heal</li>
+            </ul>
+            <a href="#store" class="mt-6 block rounded-xl bg-gradient-to-r from-pink-500 to-violet-500 text-center text-sm font-black text-white py-2.5">20.000 VC szerzése</a>
+          </article>
+        </div>
+      </section>
 
-        <!-- Staff Team Section -->
-        <section id="staff" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <span class="px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-full bg-amber-900/40 text-amber-300 border border-amber-500/30">Csapatunk</span>
-                <h2 class="text-3xl sm:text-5xl font-black text-white mt-3">Szerver <span class="gradient-gold-text">Vezetőség</span></h2>
-                <p class="text-gray-400 mt-2 text-sm sm:text-base">Ismerd meg a VoidSMP mögött álló csapatot</p>
+      <section id="features" class="mt-24">
+        <div class="text-center max-w-2xl mx-auto">
+          <div class="inline-flex items-center rounded-full chip px-4 py-1.5 text-xs font-bold uppercase tracking-[0.18em]">Miért mi?</div>
+          <h2 class="mt-6 text-3xl sm:text-5xl font-black tracking-[-0.05em] text-[var(--text)]">Szerver <span class="gradient-text">jellemzők</span></h2>
+        </div>
+
+        <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
+          <article class="section-shell card-hover rounded-[28px] p-6">
+            <div class="w-12 h-12 rounded-2xl bg-violet-500/10 text-violet-500 flex items-center justify-center mb-4"><i data-lucide="coins" class="w-5 h-5"></i></div>
+            <h3 class="text-xl font-black text-[var(--text)]">Egyedi gazdaság</h3>
+            <p class="mt-3 text-sm leading-relaxed text-[var(--text-soft)]">Kereskedj más játékosokkal, hozz létre saját boltot, aukciókat és építsd fel a vagyonod.</p>
+          </article>
+
+          <article class="section-shell card-hover rounded-[28px] p-6">
+            <div class="w-12 h-12 rounded-2xl bg-cyan-500/10 text-cyan-500 flex items-center justify-center mb-4"><i data-lucide="shield" class="w-5 h-5"></i></div>
+            <h3 class="text-xl font-black text-[var(--text)]">Területvédelem</h3>
+            <p class="mt-3 text-sm leading-relaxed text-[var(--text-soft)]">Biztonságos, védett területek, stabil építési környezet és gyors, egyszerű claim rendszer.</p>
+          </article>
+
+          <article class="section-shell card-hover rounded-[28px] p-6">
+            <div class="w-12 h-12 rounded-2xl bg-pink-500/10 text-pink-500 flex items-center justify-center mb-4"><i data-lucide="sparkles" class="w-5 h-5"></i></div>
+            <h3 class="text-xl font-black text-[var(--text)]">Enchantok & questek</h3>
+            <p class="mt-3 text-sm leading-relaxed text-[var(--text-soft)]">Különleges varázslatok, heti kihívások, kozmikus jutalmak és aktív közösségi tartalom.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="stats" class="mt-24">
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+          <article class="stat-card section-shell relative rounded-[28px] p-5 overflow-hidden card-hover">
+            <div class="flex items-center justify-between mb-5">
+              <span class="text-[11px] uppercase tracking-[0.2em] text-[var(--muted)] font-black">Játékosok online</span>
+              <div class="w-10 h-10 rounded-xl bg-violet-500/10 text-violet-500 flex items-center justify-center"><i data-lucide="users" class="w-4 h-4"></i></div>
             </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-                
-                <!-- OWNER: IMr0PINGUI -->
-                <div class="glass-card rounded-3xl p-8 flex flex-col items-center text-center relative border-2 border-amber-500/60 shadow-2xl shadow-amber-500/10 hover:-translate-y-2">
-                    <div class="absolute -top-3.5 bg-gradient-to-r from-amber-500 to-yellow-400 text-slate-950 font-black text-[11px] uppercase tracking-wider px-4 py-1 rounded-full shadow-md flex items-center gap-1.5">
-                        <i data-lucide="crown" class="w-3.5 h-3.5"></i> OWNER / TULAJDONOS
-                    </div>
-
-                    <div class="w-24 h-24 rounded-2xl p-1 bg-gradient-to-tr from-amber-500 to-yellow-300 shadow-lg shadow-amber-500/30 mt-4 mb-4">
-                        <img src="https://mc-heads.net/avatar/IMr0PINGUI/100" alt="IMr0PINGUI" class="w-full h-full rounded-xl bg-void-950 object-cover" onerror="this.src='https://placehold.co/100x100/130F26/F59E0B?text=PINGUI'">
-                    </div>
-
-                    <h3 class="text-2xl font-extrabold text-white">IMr0PINGUI</h3>
-                    <p class="text-xs text-amber-400 font-semibold tracking-wide uppercase mt-1">Szerver Tulajdonos</p>
-                    <p class="text-gray-400 text-xs mt-3 leading-relaxed">A VoidSMP megálmodója, a szerver hálózat és a fejlesztések vezetője.</p>
-                </div>
-
-                <!-- ADMIN 1: MrBenceYT -->
-                <div class="glass-card rounded-3xl p-8 flex flex-col items-center text-center relative hover:-translate-y-2">
-                    <div class="absolute -top-3.5 bg-purple-600 text-white font-bold text-[11px] uppercase tracking-wider px-3 py-1 rounded-full shadow-md flex items-center gap-1">
-                        <i data-lucide="shield-check" class="w-3.5 h-3.5"></i> ADMIN
-                    </div>
-
-                    <div class="w-24 h-24 rounded-2xl p-1 bg-gradient-to-tr from-purple-500 to-indigo-500 shadow-lg shadow-purple-500/20 mt-4 mb-4">
-                        <img src="https://mc-heads.net/avatar/MrBenceYT/100" alt="MrBenceYT" class="w-full h-full rounded-xl bg-void-950 object-cover" onerror="this.src='https://placehold.co/100x100/130F26/A855F7?text=Bence'">
-                    </div>
-
-                    <h3 class="text-2xl font-extrabold text-white">MrBenceYT</h3>
-                    <p class="text-xs text-purple-400 font-semibold tracking-wide uppercase mt-1">Főadminisztrátor</p>
-                    <p class="text-gray-400 text-xs mt-3 leading-relaxed">Felelős a játékosok támogatásáért, közösségi rendezvényekért és a rendért.</p>
-                </div>
-
-                <!-- ADMIN 2: SubForFlash -->
-                <div class="glass-card rounded-3xl p-8 flex flex-col items-center text-center relative hover:-translate-y-2">
-                    <div class="absolute -top-3.5 bg-cyan-600 text-white font-bold text-[11px] uppercase tracking-wider px-3 py-1 rounded-full shadow-md flex items-center gap-1">
-                        <i data-lucide="shield-check" class="w-3.5 h-3.5"></i> ADMIN
-                    </div>
-
-                    <div class="w-24 h-24 rounded-2xl p-1 bg-gradient-to-tr from-cyan-500 to-blue-500 shadow-lg shadow-cyan-500/20 mt-4 mb-4">
-                        <img src="https://mc-heads.net/avatar/SubForFlash/100" alt="SubForFlash" class="w-full h-full rounded-xl bg-void-950 object-cover" onerror="this.src='https://placehold.co/100x100/130F26/06B6D4?text=Flash'">
-                    </div>
-
-                    <h3 class="text-2xl font-extrabold text-white">SubForFlash</h3>
-                    <p class="text-xs text-cyan-400 font-semibold tracking-wide uppercase mt-1">Szerver Adminisztrátor</p>
-                    <p class="text-gray-400 text-xs mt-3 leading-relaxed">A Discord hibajegyek és a szerver közösség rendszeres felügyelője.</p>
-                </div>
-
+            <div class="flex items-end gap-2">
+              <span id="player-count" class="text-4xl font-black text-[var(--text)]">154</span>
+              <span class="text-sm text-[var(--text-soft)]">/ 300</span>
             </div>
-        </section>
-
-        <!-- Social Media & Platforms Section -->
-        <section id="platforms" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <span class="px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-full bg-red-900/40 text-red-300 border border-red-500/30">Közösségi Média</span>
-                <h2 class="text-3xl sm:text-5xl font-black text-white mt-3">Hivatalos <span class="gradient-theme-text">Platformjaink</span></h2>
-                <p class="text-gray-400 mt-2 text-sm sm:text-base">Kövess minket a legfrissebb tartalomért és hírekért!</p>
+            <div class="mt-5 h-2 rounded-full bg-slate-200/80 overflow-hidden">
+              <div id="player-bar" class="h-full rounded-full bg-gradient-to-r from-violet-500 to-cyan-400" style="width: 51.3%;"></div>
             </div>
+          </article>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <article class="stat-card section-shell relative rounded-[28px] p-5 overflow-hidden card-hover">
+            <div class="flex items-center justify-between mb-5">
+              <span class="text-[11px] uppercase tracking-[0.2em] text-[var(--muted)] font-black">Szerver állapot</span>
+              <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-500 flex items-center justify-center"><i data-lucide="power" class="w-4 h-4"></i></div>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="hud-dot"></span>
+              <span class="text-2xl font-black text-emerald-500">ONLINE</span>
+            </div>
+            <p class="mt-5 text-sm text-[var(--text-soft)]">Uptime: <span class="font-bold text-[var(--text)]">99.99%</span></p>
+          </article>
 
-                <!-- YOUTUBE CARD -->
-                <div class="glass-card rounded-3xl p-6 flex flex-col just... (49 KB maradt)
+          <article class="stat-card section-shell relative rounded-[28px] p-5 overflow-hidden card-hover">
+            <div class="flex items-center justify-between mb-5">
+              <span class="text-[11px] uppercase tracking-[0.2em] text-[var(--muted)] font-black">Teljesítmény (TPS)</span>
+              <div class="w-10 h-10 rounded-xl bg-sky-500/10 text-sky-500 flex items-center justify-center"><i data-lucide="cpu" class="w-4 h-4"></i></div>
+            </div>
+            <div class="flex items-end gap-2">
+              <span id="tps-val" class="text-4xl font-black text-[var(--text)]">19.99</span>
+              <span class="text-sm text-emerald-500 font-black">/20.0</span>
+            </div>
+            <p class="mt-5 text-sm text-[var(--text-soft)]">Ping: <span id="ping-val" class="font-black text-sky-500">14 ms</span></p>
+          </article>
+
+          <article class="stat-card section-shell relative rounded-[28px] p-5 overflow-hidden card-hover">
+            <div class="flex items-center justify-between mb-5">
+              <span class="text-[11px] uppercase tracking-[0.2em] text-[var(--muted)] font-black">Regisztrált játékosok</span>
+              <div class="w-10 h-10 rounded-xl bg-indigo-500/10 text-indigo-500 flex items-center justify-center"><i data-lucide="award" class="w-4 h-4"></i></div>
+            </div>
+            <div class="text-4xl font-black text-[var(--text)]">19,250+</div>
+            <p class="mt-5 text-sm text-[var(--text-soft)]">Növekvő közösség</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="staff" class="mt-24">
+        <div class="text-center max-w-2xl mx-auto">
+          <div class="inline-flex items-center rounded-full chip px-4 py-1.5 text-xs font-bold uppercase tracking-[0.18em]">Csapatunk</div>
+          <h2 class="mt-6 text-3xl sm:text-5xl font-black tracking-[-0.05em] text-[var(--text)]">Szerver <span class="gold-text">vezetőség</span></h2>
+        </div>
+
+        <div class="mt-12 max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
+          <article class="section-shell card-hover rounded-[32px] p-8 text-center relative">
+            <div class="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-gradient-to-r from-amber-400 to-yellow-300 text-slate-950 text-[10px] font-black px-4 py-1 uppercase tracking-[0.18em]">Owner</div>
+            <div class="mx-auto w-24 h-24 rounded-[22px] p-1 bg-gradient-to-br from-amber-400 to-yellow-300 shadow-lg shadow-amber-500/30">
+              <img src="https://mc-heads.net/avatar/IMr0PINGUI/100" alt="IMr0PINGUI" class="w-full h-full object-cover rounded-[18px] bg-slate-900" />
+            </div>
+            <h3 class="mt-6 text-2xl font-black text-[var(--text)]">IMr0PINGUI</h3>
+            <p class="mt-1 text-xs uppercase tracking-[0.2em] text-amber-500 font-black">Szerver tulajdonos</p>
+            <p class="mt-4 text-sm leading-relaxed text-[var(--text-soft)]">A VoidSMP megálmodója, a hálózat és a fejlesztés vezetője.</p>
+          </article>
+
+          <article class="section-shell card-hover rounded-[32px] p-8 text-center relative">
+            <div class="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-violet-500 text-white text-[10px] font-black px-4 py-1 uppercase tracking-[0.18em]">Admin</div>
+            <div class="mx-auto w-24 h-24 rounded-[22px] p-1 bg-gradient-to-br from-violet-500 to-indigo-500 shadow-lg shadow-violet-500/20">
+              <img src="https://mc-heads.net/avatar/MrBenceYT/100" alt="MrBenceYT" class="w-full h-full object-cover rounded-[18px] bg-slate-900" />
+            </div>
+            <h3 class="mt-6 text-2xl font-black text-[var(--text)]">MrBenceYT</h3>
+            <p class="mt-1 text-xs uppercase tracking-[0.2em] text-violet-500 font-black">Főadminisztrátor</p>
+            <p class="mt-4 text-sm leading-relaxed text-[var(--text-soft)]">A játékosok támogatása, események és a rend fenntartása.</p>
+          </article>
+
+          <article class="section-shell card-hover rounded-[32px] p-8 text-center relative">
+            <div class="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-cyan-500 text-white text-[10px] font-black px-4 py-1 uppercase tracking-[0.18em]">Admin</div>
+            <div class="mx-auto w-24 h-24 rounded-[22px] p-1 bg-gradient-to-br from-cyan-500 to-sky-500 shadow-lg shadow-cyan-500/20">
+              <img src="https://mc-heads.net/avatar/SubForFlash/100" alt="SubForFlash" class="w-full h-full object-cover rounded-[18px] bg-slate-900" />
+            </div>
+            <h3 class="mt-6 text-2xl font-black text-[var(--text)]">SubForFlash</h3>
+            <p class="mt-1 text-xs uppercase tracking-[0.2em] text-cyan-500 font-black">Szerver admin</p>
+            <p class="mt-4 text-sm leading-relaxed text-[var(--text-soft)]">A közösség és a Discord felügyelete, hibajegyek és támogatás.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="platforms" class="mt-24">
+        <div class="text-center max-w-2xl mx-auto">
+          <div class="inline-flex items-center rounded-full chip px-4 py-1.5 text-xs font-bold uppercase tracking-[0.18em]">Közösségi média</div>
+          <h2 class="mt-6 text-3xl sm:text-5xl font-black tracking-[-0.05em] text-[var(--text)]">Hivatalos <span class="gradient-text">platformjaink</span></h2>
+        </div>
+
+        <div class="mt-12 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
+          <article class="section-shell card-hover rounded-[28px] p-6">
+            <div class="w-12 h-12 rounded-2xl bg-red-500/10 text-red-500 flex items-center justify-center mb-4"><i data-lucide="play" class="w-5 h-5"></i></div>
+            <h3 class="text-xl font-black text-[var(--text)]">YouTube</h3>
+            <p class="mt-3 text-sm text-[var(--text-soft)]">Friss videók, letöltések és érdekes tartalmak a közösségnek.</p>
+            <a href="#" class="mt-5 inline-flex items-center gap-2 text-sm font-bold text-red-500">Megtekintés <i data-lucide="arrow-up-right" class="w-4 h-4"></i></a>
+          </article>
+
+          <article class="section-shell card-hover rounded-[28px] p-6">
+            <div class="w-12 h-12 rounded-2xl bg-indigo-500/10 text-indigo-500 flex items-center justify-center mb-4"><i data-lucide="message-square" class="w-5 h-5"></i></div>
+            <h3 class="text-xl font-black text-[var(--text)]">Discord</h3>
+            <p class="mt-3 text-sm text-[var(--text-soft)]">Beszélgetés, hírek, segítség és közösségi események egy helyen.</p>
+            <a href="https://discord.gg/DUVwTrQhS3" target="_blank" rel="noreferrer" class="mt-5 inline-flex items-center gap-2 text-sm font-bold text-indigo-500">Csatlakozás <i data-lucide="arrow-up-right" class="w-4 h-4"></i></a>
+          </article>
+
+          <article class="section-shell card-hover rounded-[28px] p-6">
+            <div class="w-12 h-12 rounded-2xl bg-pink-500/10 text-pink-500 flex items-center justify-center mb-4"><i data-lucide="instagram" class="w-5 h-5"></i></div>
+            <h3 class="text-xl font-black text-[var(--text)]">Instagram</h3>
+            <p class="mt-3 text-sm text-[var(--text-soft)]">Közösségi fotók, projektek, események és napi élmények.</p>
+            <a href="#" class="mt-5 inline-flex items-center gap-2 text-sm font-bold text-pink-500">Követés <i data-lucide="arrow-up-right" class="w-4 h-4"></i></a>
+          </article>
+
+          <article class="section-shell card-hover rounded-[28px] p-6">
+            <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 text-emerald-500 flex items-center justify-center mb-4"><i data-lucide="globe" class="w-5 h-5"></i></div>
+            <h3 class="text-xl font-black text-[var(--text)]">Weboldal</h3>
+            <p class="mt-3 text-sm text-[var(--text-soft)]">Mindig naprakész információk, rangok, csomagok és szerver adatok.</p>
+            <a href="#hero" class="mt-5 inline-flex items-center gap-2 text-sm font-bold text-emerald-500">Főoldal <i data-lucide="arrow-up-right" class="w-4 h-4"></i></a>
+          </article>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="cart-modal" class="modal-backdrop">
+    <div class="modal-panel">
+      <div class="flex items-center justify-between mb-5">
+        <h3 class="text-2xl font-black text-[var(--text)]">Kosár</h3>
+        <button class="text-[var(--text-soft)]" onclick="closeModal('cart-modal')" aria-label="Kosár bezárása"><i data-lucide="x" class="w-5 h-5"></i></button>
+      </div>
+      <div id="cart-items" class="space-y-3 text-[var(--text-soft)]">
+        <p class="text-sm">A kosár jelenleg üres.</p>
+      </div>
+      <div class="mt-6 flex items-center justify-between border-t pt-4" style="border-color: var(--line);">
+        <span class="text-sm font-bold text-[var(--text)]">Összesen</span>
+        <span id="cart-total" class="text-lg font-black text-[var(--text)]">0 Ft</span>
+      </div>
+      <button class="w-full mt-6 rounded-xl py-3 text-sm font-black glass-button">Fizetés</button>
+    </div>
+  </div>
+
+  <div id="auth-modal" class="modal-backdrop">
+    <div class="modal-panel">
+      <div class="flex items-center justify-between mb-5">
+        <h3 id="auth-title" class="text-2xl font-black text-[var(--text)]">Bejelentkezés</h3>
+        <button class="text-[var(--text-soft)]" onclick="closeModal('auth-modal')" aria-label="Bejelentkezés bezárása"><i data-lucide="x" class="w-5 h-5"></i></button>
+      </div>
+      <div class="space-y-3">
+        <input type="text" class="w-full rounded-xl border px-4 py-3 outline-none bg-white/50 border-[var(--line)] text-[var(--text)]" placeholder="Felhasználónév" />
+        <input type="password" class="w-full rounded-xl border px-4 py-3 outline-none bg-white/50 border-[var(--line)] text-[var(--text)]" placeholder="Jelszó" />
+        <button class="w-full rounded-xl py-3 text-sm font-black glass-button">Folytatás</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="rules-modal" class="modal-backdrop">
+    <div class="modal-panel">
+      <div class="flex items-center justify-between mb-5">
+        <h3 class="text-2xl font-black text-[var(--text)]">Szabályzat</h3>
+        <button class="text-[var(--text-soft)]" onclick="closeModal('rules-modal')" aria-label="Szabályzat bezárása"><i data-lucide="x" class="w-5 h-5"></i></button>
+      </div>
+      <div class="space-y-3 text-sm leading-relaxed text-[var(--text-soft)]">
+        <p>1. Tiszteletben tartjuk a társainkat és a szerver szabályait.</p>
+        <p>2. Nincs abuszív, támadó vagy bosszantó viselkedés.</p>
+        <p>3. A játékbeli vagyunk legyünk fair és folyamatosan építsünk közösséget.</p>
+        <p>4. A VoidCoin vásárlás és rangok váltás a feltételek szerint működnek.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const themeMap = {
+      purple: 'purple',
+      green: 'green',
+      blue: 'blue',
+      red: 'red',
+      obsidian: 'obsidian'
+    };
+
+    const cart = [];
+    let audioEnabled = true;
+
+    function setTheme(theme) {
+      const selected = themeMap[theme] || 'purple';
+      document.documentElement.setAttribute('data-theme', selected);
+      localStorage.setItem('void-theme', selected);
+    }
+
+    function openRulesModal() {
+      document.getElementById('rules-modal').classList.add('show');
+    }
+
+    function openAuthModal(mode = 'login') {
+      const modal = document.getElementById('auth-modal');
+      const title = document.getElementById('auth-title');
+      title.textContent = mode === 'login' ? 'Bejelentkezés' : 'Regisztráció';
+      modal.classList.add('show');
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('show');
+    }
+
+    function openCartModal() {
+      renderCart();
+      document.getElementById('cart-modal').classList.add('show');
+    }
+
+    function renderCart() {
+      const itemsEl = document.getElementById('cart-items');
+      const totalEl = document.getElementById('cart-total');
+      const badgeEl = document.getElementById('cart-badge');
+
+      if (!cart.length) {
+        itemsEl.innerHTML = '<p class="text-sm">A kosár jelenleg üres.</p>';
+        totalEl.textContent = '0 Ft';
+        badgeEl.textContent = '0';
+        return;
+      }
+
+      let total = 0;
+      itemsEl.innerHTML = cart.map(item => {
+        total += item.price;
+        return `
+          <div class="flex items-center justify-between gap-3 rounded-xl border p-3" style="border-color: var(--line); background: rgba(255,255,255,0.42);">
+            <div>
+              <div class="font-bold text-[var(--text)]">${item.name}</div>
+              <div class="text-xs text-[var(--muted)]">${item.coins} VC</div>
+            </div>
+            <div class="font-black text-[var(--text)]">${item.price.toLocaleString('hu-HU')} Ft</div>
+          </div>
+        `;
+      }).join('');
+
+      totalEl.textContent = `${total.toLocaleString('hu-HU')} Ft`;
+      badgeEl.textContent = String(cart.length);
+    }
+
+    function addToCart(id, name, price, coins) {
+      cart.push({ id, name, price, coins });
+      renderCart();
+      if (typeof confetti === 'function') {
+        confetti({ particleCount: 90, spread: 70, origin: { y: 0.7 } });
+      }
+      openCartModal();
+    }
+
+    function toggleAudio() {
+      audioEnabled = !audioEnabled;
+      const button = document.getElementById('audio-toggle');
+      const icon = button.querySelector('svg');
+      if (audioEnabled) {
+        icon.setAttribute('data-lucide', 'volume-2');
+        button.setAttribute('title', 'Hang be');
+      } else {
+        icon.setAttribute('data-lucide', 'volume-x');
+        button.setAttribute('title', 'Hang ki');
+      }
+      lucide.createIcons();
+    }
+
+    function scrollToSection(id) {
+      const section = document.getElementById(id);
+      if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function copyIpAddress() {
+      const text = '212.73.137.207:40003';
+      navigator.clipboard.writeText(text).then(() => {
+        const toast = document.getElementById('toast-msg');
+        toast.classList.remove('opacity-0');
+        toast.classList.add('opacity-100');
+        setTimeout(() => {
+          toast.classList.add('opacity-0');
+          toast.classList.remove('opacity-100');
+        }, 1800);
+      }).catch(() => {
+        console.log('IP: ' + text);
+      });
+    }
+
+    function initTheme() {
+      const saved = localStorage.getItem('void-theme');
+      if (saved && themeMap[saved]) {
+        setTheme(saved);
+      }
+    }
+
+    function initParticles() {
+      const canvas = document.getElementById('particles-canvas');
+      const ctx = canvas.getContext('2d');
+      let particles = [];
+
+      function resize() {
+        canvas.width = window.innerWidth * devicePixelRatio;
+        canvas.height = window.innerHeight * devicePixelRatio;
+        canvas.style.width = window.innerWidth + 'px';
+        canvas.style.height = window.innerHeight + 'px';
+        ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+      }
+
+      function createParticle() {
+        const accent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
+        const secondary = getComputedStyle(document.documentElement).getPropertyValue('--secondary').trim();
+        return {
+          x: Math.random() * window.innerWidth,
+          y: Math.random() * window.innerHeight,
+          r: Math.random() * 2.4 + 1,
+          vx: (Math.random() - 0.5) * 0.4,
+          vy: (Math.random() - 0.5) * 0.4,
+          color: Math.random() > 0.5 ? accent : secondary,
+        };
+      }
+
+      function spawnParticles() {
+        particles = Array.from({ length: 60 }, createParticle);
+      }
+
+      function render() {
+        ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+        particles.forEach(p => {
+          p.x += p.vx;
+          p.y += p.vy;
+          if (p.x < 0 || p.x > window.innerWidth) p.vx *= -1;
+          if (p.y < 0 || p.y > window.innerHeight) p.vy *= -1;
+
+          ctx.beginPath();
+          ctx.fillStyle = p.color;
+          ctx.shadowBlur = 12;
+          ctx.shadowColor = p.color;
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fill();
+        });
+        ctx.shadowBlur = 0;
+        requestAnimationFrame(render);
+      }
+
+      window.addEventListener('resize', () => {
+        resize();
+        spawnParticles();
+      });
+
+      resize();
+      spawnParticles();
+      render();
+    }
+
+    function initCursor() {
+      const glow = document.querySelector('.cursor-glow');
+      const dot = document.querySelector('.cursor-dot');
+      window.addEventListener('pointermove', (event) => {
+        glow.style.left = event.clientX + 'px';
+        glow.style.top = event.clientY + 'px';
+        dot.style.left = event.clientX + 'px';
+        dot.style.top = event.clientY + 'px';
+      });
+      document.querySelectorAll('button, a, .card-hover, .soft-shell, .glass-button').forEach(el => {
+        el.addEventListener('pointerenter', () => {
+          dot.style.width = '18px';
+          dot.style.height = '18px';
+        });
+        el.addEventListener('pointerleave', () => {
+          dot.style.width = '12px';
+          dot.style.height = '12px';
+        });
+      });
+    }
+
+    document.getElementById('menu-toggle')?.addEventListener('click', () => {
+      const menu = document.getElementById('mobile-menu');
+      menu.classList.toggle('open');
+    });
+
+    document.addEventListener('click', (event) => {
+      const backdrop = event.target.closest('.modal-backdrop');
+      if (backdrop && event.target === backdrop) {
+        backdrop.classList.remove('show');
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      initTheme();
+      initParticles();
+      initCursor();
+      if (window.lucide) lucide.createIcons();
+    });
+  </script>
+</body>
+</html>

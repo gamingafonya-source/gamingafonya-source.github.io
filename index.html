@@ -47,315 +47,153 @@
       --bg-soft: #f1ecff;
       --panel: rgba(255, 255, 255, 0.72);
       --panel-strong: rgba(255, 255, 255, 0.85);
-      --panel-alt: rgba(255, 255, 255, 0.58);
       --text: #171724;
       --text-soft: #595b73;
       --muted: #74799b;
       --line: rgba(104, 82, 166, 0.18);
       --accent: #8b5cf6;
-      --accent-strong: #7c3aed;
-      --accent-soft: rgba(139, 92, 246, 0.12);
       --secondary: #22d3ee;
       --gold: #f59e0b;
       --success: #10b981;
-      --danger: #ef4444;
       --shadow: rgba(88, 63, 160, 0.18);
       --theme-glow: rgba(139, 92, 246, 0.25);
-      --hero-radial: radial-gradient(circle at top, rgba(139, 92, 246, 0.30), transparent 55%);
     }
 
     html[data-theme="green"] {
       --bg-page: #f3fff9;
       --bg-soft: #ebfff6;
-      --panel: rgba(255, 255, 255, 0.72);
-      --panel-strong: rgba(255, 255, 255, 0.88);
-      --panel-alt: rgba(255, 255, 255, 0.6);
+      --panel: rgba(255,255,255,0.72);
+      --panel-strong: rgba(255,255,255,0.88);
       --text: #15231d;
       --text-soft: #526b60;
       --muted: #6c8177;
       --line: rgba(16, 185, 129, 0.15);
       --accent: #10b981;
-      --accent-strong: #059669;
-      --accent-soft: rgba(16, 185, 129, 0.12);
       --secondary: #2dd4bf;
-      --gold: #f59e0b;
-      --success: #10b981;
-      --danger: #ef4444;
       --theme-glow: rgba(16, 185, 129, 0.22);
-      --hero-radial: radial-gradient(circle at top, rgba(16, 185, 129, 0.28), transparent 55%);
     }
 
     html[data-theme="blue"] {
       --bg-page: #f2f9ff;
       --bg-soft: #edf7ff;
-      --panel: rgba(255, 255, 255, 0.75);
-      --panel-strong: rgba(255, 255, 255, 0.88);
-      --panel-alt: rgba(255, 255, 255, 0.62);
+      --panel: rgba(255,255,255,0.74);
+      --panel-strong: rgba(255,255,255,0.88);
       --text: #14253d;
       --text-soft: #566a83;
       --muted: #6f7f97;
       --line: rgba(59, 130, 246, 0.14);
       --accent: #3b82f6;
-      --accent-strong: #2563eb;
-      --accent-soft: rgba(59, 130, 246, 0.12);
       --secondary: #38bdf8;
-      --gold: #f59e0b;
-      --success: #10b981;
-      --danger: #ef4444;
       --theme-glow: rgba(59, 130, 246, 0.24);
-      --hero-radial: radial-gradient(circle at top, rgba(59, 130, 246, 0.30), transparent 55%);
     }
 
     html[data-theme="red"] {
       --bg-page: #fff5f5;
       --bg-soft: #fff0f0;
-      --panel: rgba(255, 255, 255, 0.74);
-      --panel-strong: rgba(255, 255, 255, 0.88);
-      --panel-alt: rgba(255, 255, 255, 0.62);
+      --panel: rgba(255,255,255,0.74);
+      --panel-strong: rgba(255,255,255,0.88);
       --text: #2a1d1d;
       --text-soft: #6a4e4e;
       --muted: #7b5d5d;
       --line: rgba(239, 68, 68, 0.14);
       --accent: #ef4444;
-      --accent-strong: #dc2626;
-      --accent-soft: rgba(239, 68, 68, 0.12);
       --secondary: #fb923c;
-      --gold: #f59e0b;
-      --success: #10b981;
-      --danger: #ef4444;
       --theme-glow: rgba(239, 68, 68, 0.22);
-      --hero-radial: radial-gradient(circle at top, rgba(239, 68, 68, 0.25), transparent 55%);
     }
 
     html[data-theme="obsidian"] {
-      --bg-page: #0e1118;
-      --bg-soft: #141a24;
-      --panel: rgba(17, 23, 31, 0.72);
-      --panel-strong: rgba(20, 27, 36, 0.9);
-      --panel-alt: rgba(18, 24, 31, 0.6);
+      --bg-page: #0d1218;
+      --bg-soft: #141b26;
+      --panel: rgba(17,23,31,0.72);
+      --panel-strong: rgba(20,27,36,0.9);
       --text: #f4f8ff;
       --text-soft: #d8e6ff;
       --muted: #b9c5d8;
-      --line: rgba(255, 255, 255, 0.1);
+      --line: rgba(255,255,255,0.1);
       --accent: #94a3b8;
-      --accent-strong: #cbd5e1;
-      --accent-soft: rgba(148, 163, 184, 0.12);
       --secondary: #f8fafc;
-      --gold: #fbbf24;
-      --success: #34d399;
-      --danger: #f87171;
-      --theme-glow: rgba(148, 163, 184, 0.2);
-      --hero-radial: radial-gradient(circle at top, rgba(148, 163, 184, 0.18), transparent 55%);
+      --theme-glow: rgba(148,163,184,0.2);
     }
 
     * { box-sizing: border-box; }
-
     html { scroll-behavior: smooth; }
-
     body {
       margin: 0;
       font-family: 'Inter', sans-serif;
-      background:
-        radial-gradient(circle at top right, rgba(139, 92, 246, 0.12), transparent 28%),
-        linear-gradient(180deg, var(--bg-page) 0%, var(--bg-soft) 100%);
+      background: radial-gradient(circle at top right, rgba(139,92,246,0.12), transparent 28%), linear-gradient(180deg, var(--bg-page) 0%, var(--bg-soft) 100%);
       color: var(--text);
       overflow-x: hidden;
-      transition: background 0.4s ease, color 0.3s ease;
+      transition: background .4s ease, color .3s ease;
       cursor: none;
     }
-
-    a, button {
-      cursor: none;
-    }
+    a, button { cursor: none; }
 
     .cursor-glow {
-      position: fixed;
-      width: 220px;
-      height: 220px;
-      border-radius: 9999px;
-      background: radial-gradient(circle, rgba(255,255,255,0.26), rgba(139,92,246,0.10) 42%, transparent 68%);
-      pointer-events: none;
-      z-index: 80;
-      transform: translate(-50%, -50%);
-      transition: opacity 0.15s ease;
-      filter: blur(10px);
-      opacity: 0.9;
+      position: fixed; width: 220px; height: 220px; border-radius: 9999px;
+      background: radial-gradient(circle, rgba(255,255,255,0.24), rgba(139,92,246,0.08) 42%, transparent 68%);
+      pointer-events: none; z-index: 80; transform: translate(-50%, -50%); filter: blur(10px); opacity: .9;
     }
-
     .cursor-dot {
-      position: fixed;
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      background: var(--accent);
-      border: 2px solid rgba(255,255,255,0.8);
-      box-shadow: 0 0 20px rgba(139, 92, 246, 0.7);
-      pointer-events: none;
-      z-index: 81;
-      transform: translate(-50%, -50%);
-      transition: width 0.2s ease, height 0.2s ease, background 0.2s ease;
+      position: fixed; width: 12px; height: 12px; border-radius: 50%; background: var(--accent);
+      border: 2px solid rgba(255,255,255,0.8); box-shadow: 0 0 20px rgba(139,92,246,0.65);
+      pointer-events: none; z-index: 81; transform: translate(-50%, -50%);
+      transition: width .2s ease, height .2s ease, background .2s ease;
     }
 
     .soft-shell {
-      background: var(--panel);
-      border: 1px solid var(--line);
-      box-shadow: 0 10px 35px var(--shadow);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
+      background: var(--panel); border: 1px solid var(--line); box-shadow: 0 10px 35px var(--shadow);
+      backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
     }
-
     .section-shell {
-      background: var(--panel-strong);
-      border: 1px solid var(--line);
-      box-shadow: 0 18px 70px rgba(15, 23, 42, 0.06);
+      background: var(--panel-strong); border: 1px solid var(--line); box-shadow: 0 18px 70px rgba(15,23,42,0.06);
     }
-
     .brand-mark {
-      background: linear-gradient(135deg, var(--accent), var(--secondary));
-      box-shadow: 0 18px 40px var(--theme-glow);
+      background: linear-gradient(135deg, var(--accent), var(--secondary)); box-shadow: 0 18px 40px var(--theme-glow);
     }
-
     .gradient-text {
-      background: linear-gradient(135deg, var(--accent), var(--secondary));
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
+      background: linear-gradient(135deg, var(--accent), var(--secondary)); -webkit-background-clip: text; background-clip: text; color: transparent;
     }
-
     .gold-text {
-      background: linear-gradient(135deg, #facc15 0%, #f59e0b 50%, #f97316 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
+      background: linear-gradient(135deg, #facc15 0%, #f59e0b 50%, #f97316 100%); -webkit-background-clip: text; background-clip: text; color: transparent;
     }
-
     .hud-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: var(--success);
-      box-shadow: 0 0 0 8px rgba(16, 185, 129, 0.12);
-      animation: pulseDot 2s infinite;
+      width: 10px; height: 10px; border-radius: 50%; background: var(--success);
+      box-shadow: 0 0 0 8px rgba(16,185,129,0.12); animation: pulseDot 2s infinite;
     }
-
-    @keyframes pulseDot {
-      0%, 100% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.3); opacity: 0.72; }
-    }
-
-    .hero-ring {
-      position: absolute;
-      inset: -18% 20% auto auto;
-      width: 360px;
-      height: 360px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(139, 92, 246, 0.18), transparent 62%);
-      filter: blur(18px);
-      pointer-events: none;
-    }
-
-    .theme-pill {
-      background: linear-gradient(135deg, rgba(255,255,255,0.72), rgba(255,255,255,0.35));
-      border: 1px solid var(--line);
-    }
-
-    .nav-link {
-      color: var(--text-soft);
-      transition: color 0.2s ease, opacity 0.2s ease;
-    }
-
-    .nav-link:hover {
-      color: var(--accent);
-    }
-
-    .card-hover {
-      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
-    }
-
-    .card-hover:hover {
-      transform: translateY(-4px);
-      border-color: rgba(139, 92, 246, 0.28);
-      box-shadow: 0 18px 40px rgba(27, 18, 51, 0.09);
-    }
-
+    @keyframes pulseDot { 0%,100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.3); opacity: .72; } }
+    .nav-link { color: var(--text-soft); transition: color .2s ease; }
+    .nav-link:hover { color: var(--accent); }
+    .card-hover { transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease; }
+    .card-hover:hover { transform: translateY(-4px); border-color: rgba(139,92,246,0.28); box-shadow: 0 18px 40px rgba(27,18,51,0.09); }
     .glass-button {
-      background: linear-gradient(135deg, var(--accent), var(--secondary));
-      color: white;
-      box-shadow: 0 12px 30px rgba(34, 211, 238, 0.2);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      background: linear-gradient(135deg, var(--accent), var(--secondary)); color: white; box-shadow: 0 12px 30px rgba(34,211,238,0.2);
+      transition: transform .2s ease, box-shadow .2s ease;
     }
-
-    .glass-button:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 16px 40px rgba(139, 92, 246, 0.28);
-    }
-
-    .chip {
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.46);
-      color: var(--text-soft);
-    }
-
-    #particles-canvas {
-      position: fixed;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-      pointer-events: none;
-      opacity: 0.9;
-    }
-
-    .content-shell {
-      position: relative;
-      z-index: 1;
-    }
-
+    .glass-button:hover { transform: translateY(-1px); box-shadow: 0 16px 40px rgba(139,92,246,0.28); }
+    .chip { border: 1px solid var(--line); background: rgba(255,255,255,0.46); color: var(--text-soft); }
+    #particles-canvas { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; opacity: .9; }
+    .content-shell { position: relative; z-index: 1; }
     .modal-backdrop {
-      position: fixed;
-      inset: 0;
-      background: rgba(15, 23, 42, 0.48);
-      backdrop-filter: blur(8px);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 90;
-      padding: 20px;
+      position: fixed; inset: 0; background: rgba(15,23,42,.48); backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; z-index: 90; padding: 20px;
     }
-
     .modal-backdrop.show { display: flex; }
-
     .modal-panel {
-      width: min(560px, 100%);
-      border-radius: 28px;
-      padding: 24px;
-      background: rgba(255,255,255,0.82);
-      border: 1px solid var(--line);
-      box-shadow: 0 30px 90px rgba(15, 23, 42, 0.22);
-      color: var(--text);
+      width: min(560px,100%); border-radius: 28px; padding: 24px; background: rgba(255,255,255,.82);
+      border: 1px solid var(--line); box-shadow: 0 30px 90px rgba(15,23,42,.22); color: var(--text);
     }
-
-    .stat-card::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(139, 92, 246, 0.08), rgba(34, 211, 238, 0.08));
-      opacity: 0;
-      transition: opacity 0.25s ease;
-      pointer-events: none;
+    .theme-switcher {
+      position: fixed; left: 18px; bottom: 18px; z-index: 55; display: flex; align-items: center; gap: 10px;
+      padding: 10px 12px; border-radius: 18px; background: rgba(255,255,255,.6); border: 1px solid var(--line); box-shadow: 0 16px 44px rgba(15,23,42,.12); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
     }
-
-    .stat-card:hover::before { opacity: 1; }
-
+    .theme-switcher .swatch { width: 18px; height: 18px; border-radius: 50%; display: block; border: 2px solid rgba(255,255,255,.8); box-shadow: 0 0 0 1px rgba(15,23,42,.08); }
+    .theme-switcher button { background: transparent; border: 0; padding: 0; }
+    .section-card { position: relative; }
     @media (max-width: 768px) {
       body { cursor: auto; }
       .cursor-glow, .cursor-dot { display: none; }
-      .mobile-menu {
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.35s ease;
-      }
-      .mobile-menu.open { max-height: 500px; }
+      .mobile-menu { max-height: 0; overflow: hidden; transition: max-height .35s ease; }
+      .mobile-menu.open { max-height: 520px; }
+      .theme-switcher { left: 12px; bottom: 12px; }
     }
   </style>
 </head>
@@ -363,6 +201,15 @@
   <canvas id="particles-canvas"></canvas>
   <div class="cursor-glow"></div>
   <div class="cursor-dot"></div>
+
+  <div class="theme-switcher" aria-label="Téma váltó">
+    <span class="text-[10px] uppercase tracking-[0.2em] font-black text-[var(--muted)] hidden sm:inline">Téma</span>
+    <button title="Purple" onclick="setTheme('purple')"><span class="swatch" style="background:#8b5cf6"></span></button>
+    <button title="Green" onclick="setTheme('green')"><span class="swatch" style="background:#10b981"></span></button>
+    <button title="Blue" onclick="setTheme('blue')"><span class="swatch" style="background:#3b82f6"></span></button>
+    <button title="Red" onclick="setTheme('red')"><span class="swatch" style="background:#ef4444"></span></button>
+    <button title="Obsidian" onclick="setTheme('obsidian')"><span class="swatch" style="background:#cbd5e1"></span></button>
+  </div>
 
   <div class="content-shell">
     <header class="sticky top-0 z-40 border-b" style="background: rgba(255,255,255,0.46); border-color: var(--line); backdrop-filter: blur(18px);">
@@ -389,16 +236,11 @@
               <i data-lucide="volume-2" class="w-4 h-4"></i>
             </button>
             <button class="soft-shell rounded-xl px-3.5 py-2.5 flex items-center gap-2 text-sm font-semibold text-[var(--text-soft)] hover:text-[var(--text)] transition-colors" onclick="openCartModal()">
-              <i data-lucide="shopping-cart" class="w-4 h-4 text-amber-500"></i>
-              Kosár
+              <i data-lucide="shopping-cart" class="w-4 h-4 text-amber-500"></i> Kosár
               <span id="cart-badge" class="min-w-6 h-6 px-1.5 rounded-full bg-amber-400 text-slate-950 text-[10px] font-black flex items-center justify-center">0</span>
             </button>
-            <button class="soft-shell rounded-xl px-3.5 py-2.5 text-sm font-semibold text-[var(--text)]" onclick="openAuthModal('login')">
-              Bejelentkezés
-            </button>
-            <button class="glass-button rounded-xl px-4 py-2.5 text-xs font-black uppercase tracking-wide" onclick="copyIpAddress()">
-              play.voidsmp.net
-            </button>
+            <button class="soft-shell rounded-xl px-3.5 py-2.5 text-sm font-semibold text-[var(--text)]" onclick="openAuthModal('login')">Bejelentkezés</button>
+            <button class="glass-button rounded-xl px-4 py-2.5 text-xs font-black uppercase tracking-wide" onclick="copyIpAddress()">play.voidsmp.net</button>
           </div>
 
           <button id="menu-toggle" class="md:hidden soft-shell rounded-xl w-11 h-11 flex items-center justify-center text-[var(--text-soft)]" aria-label="Mobil menü">
@@ -423,9 +265,9 @@
 
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
       <section id="hero" class="relative pt-16 sm:pt-20 lg:pt-24">
-        <div class="hero-ring"></div>
+        <div class="hero-ring absolute right-20 top-0 w-[360px] h-[360px] rounded-full" style="background: radial-gradient(circle, rgba(139,92,246,0.18), transparent 62%); filter: blur(18px);"></div>
         <div class="mx-auto max-w-4xl text-center">
-          <div class="inline-flex items-center gap-3 px-4 py-2 theme-pill rounded-full text-sm font-semibold text-[var(--text-soft)]">
+          <div class="inline-flex items-center gap-3 px-4 py-2 theme-pill rounded-full text-sm font-semibold text-[var(--text-soft)]" style="background: linear-gradient(135deg, rgba(255,255,255,0.72), rgba(255,255,255,0.35)); border: 1px solid var(--line);">
             <span class="hud-dot"></span>
             Minecraft 1.20.x SMP szerver online
           </div>
@@ -455,9 +297,7 @@
                   <div class="font-mono text-base sm:text-lg font-black text-[var(--text)] break-all">212.73.137.207:40003</div>
                 </div>
               </div>
-              <button id="copy-btn" class="glass-button rounded-xl px-5 py-3 text-sm font-black" onclick="copyIpAddress()">
-                Másolás
-              </button>
+              <button id="copy-btn" class="glass-button rounded-xl px-5 py-3 text-sm font-black" onclick="copyIpAddress()">Másolás</button>
             </div>
             <div id="toast-msg" class="mt-3 text-sm font-semibold text-emerald-600 opacity-0 transition-opacity">
               ✓ IP sikeresen a vágólapra másolva.
@@ -474,11 +314,9 @@
         </div>
 
         <div class="mt-12 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
-          <article class="section-shell card-hover rounded-[30px] p-6 flex flex-col justify-between">
+          <article class="section-shell card-hover rounded-[30px] p-6 flex flex-col justify-between section-card">
             <div>
-              <div class="w-14 h-14 rounded-2xl bg-amber-500/15 text-amber-500 flex items-center justify-center mb-5">
-                <i data-lucide="coins" class="w-7 h-7"></i>
-              </div>
+              <div class="w-14 h-14 rounded-2xl bg-amber-500/15 text-amber-500 flex items-center justify-center mb-5"><i data-lucide="coins" class="w-7 h-7"></i></div>
               <h3 class="text-2xl font-black text-[var(--text)]">1.500 VoidCoin</h3>
               <p class="mt-1 text-sm text-[var(--muted)]">Kezdő érme csomag</p>
               <div class="mt-6 mb-5 text-4xl font-black text-amber-500">1.000<span class="text-base font-medium text-[var(--muted)]"> Ft</span></div>
@@ -491,11 +329,9 @@
             <button class="mt-6 glass-button rounded-xl py-3 text-sm font-black" onclick="addToCart('1500_vc','1.500 VoidCoin Csomag',1000,1500)">Kosárba (1.000 Ft)</button>
           </article>
 
-          <article class="section-shell card-hover rounded-[30px] p-6 flex flex-col justify-between">
+          <article class="section-shell card-hover rounded-[30px] p-6 flex flex-col justify-between section-card">
             <div>
-              <div class="w-14 h-14 rounded-2xl bg-amber-500/15 text-amber-500 flex items-center justify-center mb-5">
-                <i data-lucide="gem" class="w-7 h-7"></i>
-              </div>
+              <div class="w-14 h-14 rounded-2xl bg-amber-500/15 text-amber-500 flex items-center justify-center mb-5"><i data-lucide="gem" class="w-7 h-7"></i></div>
               <h3 class="text-2xl font-black text-[var(--text)]">3.500 VoidCoin</h3>
               <p class="mt-1 text-sm text-[var(--muted)]">+500 bónusz</p>
               <div class="mt-6 mb-5 text-4xl font-black text-amber-500">2.000<span class="text-base font-medium text-[var(--muted)]"> Ft</span></div>
@@ -508,11 +344,9 @@
             <button class="mt-6 glass-button rounded-xl py-3 text-sm font-black" onclick="addToCart('3500_vc','3.500 VoidCoin Csomag',2000,3500)">Kosárba (2.000 Ft)</button>
           </article>
 
-          <article class="section-shell card-hover rounded-[30px] p-6 flex flex-col justify-between">
+          <article class="section-shell card-hover rounded-[30px] p-6 flex flex-col justify-between section-card">
             <div>
-              <div class="w-14 h-14 rounded-2xl bg-sky-500/15 text-sky-500 flex items-center justify-center mb-5">
-                <i data-lucide="sparkles" class="w-7 h-7"></i>
-              </div>
+              <div class="w-14 h-14 rounded-2xl bg-sky-500/15 text-sky-500 flex items-center justify-center mb-5"><i data-lucide="sparkles" class="w-7 h-7"></i></div>
               <h3 class="text-2xl font-black text-[var(--text)]">8.500 VoidCoin</h3>
               <p class="mt-1 text-sm text-[var(--muted)]">+1.500 bónusz</p>
               <div class="mt-6 mb-5 text-4xl font-black text-amber-500">4.500<span class="text-base font-medium text-[var(--muted)]"> Ft</span></div>
@@ -525,12 +359,10 @@
             <button class="mt-6 glass-button rounded-xl py-3 text-sm font-black" onclick="addToCart('8500_vc','8.500 VoidCoin Csomag',4500,8500)">Kosárba (4.500 Ft)</button>
           </article>
 
-          <article class="section-shell card-hover border-2 rounded-[30px] p-6 flex flex-col justify-between" style="border-color: rgba(139,92,246,0.28); box-shadow: 0 24px 50px rgba(139,92,246,0.16);">
+          <article class="section-shell card-hover border-2 rounded-[30px] p-6 flex flex-col justify-between section-card" style="border-color: rgba(139,92,246,0.28); box-shadow: 0 24px 50px rgba(139,92,246,0.16);">
             <div class="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-gradient-to-r from-violet-500 to-pink-500 text-white text-[10px] font-black px-4 py-1 tracking-[0.18em] uppercase">Legjobb ajánlat</div>
             <div>
-              <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-violet-500 to-pink-500 text-white flex items-center justify-center mb-5 shadow-lg shadow-violet-500/30">
-                <i data-lucide="sparkles" class="w-7 h-7"></i>
-              </div>
+              <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-violet-500 to-pink-500 text-white flex items-center justify-center mb-5 shadow-lg shadow-violet-500/30"><i data-lucide="sparkles" class="w-7 h-7"></i></div>
               <h3 class="text-2xl font-black text-[var(--text)]">20.000 VoidCoin</h3>
               <p class="mt-1 text-sm text-pink-500 font-black">+1.500 extra bónusz</p>
               <div class="mt-6 mb-5 text-4xl font-black text-violet-500">9.900<span class="text-base font-medium text-[var(--muted)]"> Ft</span></div>
@@ -552,7 +384,7 @@
         </div>
 
         <div class="mt-12 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
-          <article class="section-shell card-hover rounded-[30px] p-5">
+          <article class="section-shell card-hover rounded-[30px] p-5 section-card">
             <div class="flex items-center justify-between mb-4">
               <div class="w-12 h-12 rounded-2xl bg-blue-500/10 text-blue-500 flex items-center justify-center"><i data-lucide="zap" class="w-5 h-5"></i></div>
               <span class="chip rounded-full px-2.5 py-1 text-[10px] font-black uppercase">3.000 VC</span>
@@ -568,7 +400,7 @@
             <a href="#store" class="mt-6 block rounded-xl border border-blue-500/20 bg-blue-500/5 text-center text-sm font-bold text-blue-500 py-2.5">VoidCoin szerzése</a>
           </article>
 
-          <article class="section-shell card-hover rounded-[30px] p-5">
+          <article class="section-shell card-hover rounded-[30px] p-5 section-card">
             <div class="flex items-center justify-between mb-4">
               <div class="w-12 h-12 rounded-2xl bg-violet-500/10 text-violet-500 flex items-center justify-center"><i data-lucide="moon" class="w-5 h-5"></i></div>
               <span class="chip rounded-full px-2.5 py-1 text-[10px] font-black uppercase">7.000 VC</span>
@@ -584,7 +416,7 @@
             <a href="#store" class="mt-6 block rounded-xl border border-violet-500/20 bg-violet-500/5 text-center text-sm font-bold text-violet-500 py-2.5">VoidCoin szerzése</a>
           </article>
 
-          <article class="section-shell card-hover rounded-[30px] p-5">
+          <article class="section-shell card-hover rounded-[30px] p-5 section-card">
             <div class="flex items-center justify-between mb-4">
               <div class="w-12 h-12 rounded-2xl bg-cyan-500/10 text-cyan-500 flex items-center justify-center"><i data-lucide="orbit" class="w-5 h-5"></i></div>
               <span class="chip rounded-full px-2.5 py-1 text-[10px] font-black uppercase">12.000 VC</span>
@@ -600,7 +432,7 @@
             <a href="#store" class="mt-6 block rounded-xl border border-cyan-500/20 bg-cyan-500/5 text-center text-sm font-bold text-cyan-500 py-2.5">VoidCoin szerzése</a>
           </article>
 
-          <article class="section-shell card-hover rounded-[30px] p-5 border-2" style="border-color: rgba(236,72,153,0.28);">
+          <article class="section-shell card-hover rounded-[30px] p-5 border-2 section-card" style="border-color: rgba(236,72,153,0.28);">
             <div class="flex items-center justify-between mb-4">
               <div class="w-12 h-12 rounded-2xl bg-pink-500/10 text-pink-500 flex items-center justify-center"><i data-lucide="crown" class="w-5 h-5"></i></div>
               <span class="rounded-full px-2.5 py-1 text-[10px] font-black uppercase text-slate-950 bg-gradient-to-r from-amber-400 to-yellow-300">20.000 VC</span>
@@ -625,19 +457,19 @@
         </div>
 
         <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
-          <article class="section-shell card-hover rounded-[28px] p-6">
+          <article class="section-shell card-hover rounded-[28px] p-6 section-card">
             <div class="w-12 h-12 rounded-2xl bg-violet-500/10 text-violet-500 flex items-center justify-center mb-4"><i data-lucide="coins" class="w-5 h-5"></i></div>
             <h3 class="text-xl font-black text-[var(--text)]">Egyedi gazdaság</h3>
             <p class="mt-3 text-sm leading-relaxed text-[var(--text-soft)]">Kereskedj más játékosokkal, hozz létre saját boltot, aukciókat és építsd fel a vagyonod.</p>
           </article>
 
-          <article class="section-shell card-hover rounded-[28px] p-6">
+          <article class="section-shell card-hover rounded-[28px] p-6 section-card">
             <div class="w-12 h-12 rounded-2xl bg-cyan-500/10 text-cyan-500 flex items-center justify-center mb-4"><i data-lucide="shield" class="w-5 h-5"></i></div>
             <h3 class="text-xl font-black text-[var(--text)]">Területvédelem</h3>
             <p class="mt-3 text-sm leading-relaxed text-[var(--text-soft)]">Biztonságos, védett területek, stabil építési környezet és gyors, egyszerű claim rendszer.</p>
           </article>
 
-          <article class="section-shell card-hover rounded-[28px] p-6">
+          <article class="section-shell card-hover rounded-[28px] p-6 section-card">
             <div class="w-12 h-12 rounded-2xl bg-pink-500/10 text-pink-500 flex items-center justify-center mb-4"><i data-lucide="sparkles" class="w-5 h-5"></i></div>
             <h3 class="text-xl font-black text-[var(--text)]">Enchantok & questek</h3>
             <p class="mt-3 text-sm leading-relaxed text-[var(--text-soft)]">Különleges varázslatok, heti kihívások, kozmikus jutalmak és aktív közösségi tartalom.</p>
@@ -647,7 +479,7 @@
 
       <section id="stats" class="mt-24">
         <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
-          <article class="stat-card section-shell relative rounded-[28px] p-5 overflow-hidden card-hover">
+          <article class="stat-card section-shell relative rounded-[28px] p-5 overflow-hidden card-hover section-card">
             <div class="flex items-center justify-between mb-5">
               <span class="text-[11px] uppercase tracking-[0.2em] text-[var(--muted)] font-black">Játékosok online</span>
               <div class="w-10 h-10 rounded-xl bg-violet-500/10 text-violet-500 flex items-center justify-center"><i data-lucide="users" class="w-4 h-4"></i></div>
@@ -661,7 +493,7 @@
             </div>
           </article>
 
-          <article class="stat-card section-shell relative rounded-[28px] p-5 overflow-hidden card-hover">
+          <article class="stat-card section-shell relative rounded-[28px] p-5 overflow-hidden card-hover section-card">
             <div class="flex items-center justify-between mb-5">
               <span class="text-[11px] uppercase tracking-[0.2em] text-[var(--muted)] font-black">Szerver állapot</span>
               <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-500 flex items-center justify-center"><i data-lucide="power" class="w-4 h-4"></i></div>
@@ -673,7 +505,7 @@
             <p class="mt-5 text-sm text-[var(--text-soft)]">Uptime: <span class="font-bold text-[var(--text)]">99.99%</span></p>
           </article>
 
-          <article class="stat-card section-shell relative rounded-[28px] p-5 overflow-hidden card-hover">
+          <article class="stat-card section-shell relative rounded-[28px] p-5 overflow-hidden card-hover section-card">
             <div class="flex items-center justify-between mb-5">
               <span class="text-[11px] uppercase tracking-[0.2em] text-[var(--muted)] font-black">Teljesítmény (TPS)</span>
               <div class="w-10 h-10 rounded-xl bg-sky-500/10 text-sky-500 flex items-center justify-center"><i data-lucide="cpu" class="w-4 h-4"></i></div>
@@ -685,7 +517,7 @@
             <p class="mt-5 text-sm text-[var(--text-soft)]">Ping: <span id="ping-val" class="font-black text-sky-500">14 ms</span></p>
           </article>
 
-          <article class="stat-card section-shell relative rounded-[28px] p-5 overflow-hidden card-hover">
+          <article class="stat-card section-shell relative rounded-[28px] p-5 overflow-hidden card-hover section-card">
             <div class="flex items-center justify-between mb-5">
               <span class="text-[11px] uppercase tracking-[0.2em] text-[var(--muted)] font-black">Regisztrált játékosok</span>
               <div class="w-10 h-10 rounded-xl bg-indigo-500/10 text-indigo-500 flex items-center justify-center"><i data-lucide="award" class="w-4 h-4"></i></div>
@@ -703,7 +535,7 @@
         </div>
 
         <div class="mt-12 max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
-          <article class="section-shell card-hover rounded-[32px] p-8 text-center relative">
+          <article class="section-shell card-hover rounded-[32px] p-8 text-center relative section-card">
             <div class="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-gradient-to-r from-amber-400 to-yellow-300 text-slate-950 text-[10px] font-black px-4 py-1 uppercase tracking-[0.18em]">Owner</div>
             <div class="mx-auto w-24 h-24 rounded-[22px] p-1 bg-gradient-to-br from-amber-400 to-yellow-300 shadow-lg shadow-amber-500/30">
               <img src="https://mc-heads.net/avatar/IMr0PINGUI/100" alt="IMr0PINGUI" class="w-full h-full object-cover rounded-[18px] bg-slate-900" />
@@ -713,24 +545,24 @@
             <p class="mt-4 text-sm leading-relaxed text-[var(--text-soft)]">A VoidSMP megálmodója, a hálózat és a fejlesztés vezetője.</p>
           </article>
 
-          <article class="section-shell card-hover rounded-[32px] p-8 text-center relative">
+          <article class="section-shell card-hover rounded-[32px] p-8 text-center relative section-card">
             <div class="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-violet-500 text-white text-[10px] font-black px-4 py-1 uppercase tracking-[0.18em]">Admin</div>
             <div class="mx-auto w-24 h-24 rounded-[22px] p-1 bg-gradient-to-br from-violet-500 to-indigo-500 shadow-lg shadow-violet-500/20">
               <img src="https://mc-heads.net/avatar/MrBenceYT/100" alt="MrBenceYT" class="w-full h-full object-cover rounded-[18px] bg-slate-900" />
             </div>
             <h3 class="mt-6 text-2xl font-black text-[var(--text)]">MrBenceYT</h3>
-            <p class="mt-1 text-xs uppercase tracking-[0.2em] text-violet-500 font-black">Főadminisztrátor</p>
-            <p class="mt-4 text-sm leading-relaxed text-[var(--text-soft)]">A játékosok támogatása, események és a rend fenntartása.</p>
+            <p class="mt-1 text-xs uppercase tracking-[0.2em] text-violet-500 font-black">Admin</p>
+            <p class="mt-4 text-sm leading-relaxed text-[var(--text-soft)]">A játékosok támogatása, közösségi események és a rend fenntartása.</p>
           </article>
 
-          <article class="section-shell card-hover rounded-[32px] p-8 text-center relative">
+          <article class="section-shell card-hover rounded-[32px] p-8 text-center relative section-card">
             <div class="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-cyan-500 text-white text-[10px] font-black px-4 py-1 uppercase tracking-[0.18em]">Admin</div>
             <div class="mx-auto w-24 h-24 rounded-[22px] p-1 bg-gradient-to-br from-cyan-500 to-sky-500 shadow-lg shadow-cyan-500/20">
-              <img src="https://mc-heads.net/avatar/SubForFlash/100" alt="SubForFlash" class="w-full h-full object-cover rounded-[18px] bg-slate-900" />
+              <img src="https://mc-heads.net/avatar/Afonya_Dev/100" alt="Afonya_Dev" class="w-full h-full object-cover rounded-[18px] bg-slate-900" onerror="this.src='https://minotar.net/avatar/Afonya_Dev/100.png'" />
             </div>
-            <h3 class="mt-6 text-2xl font-black text-[var(--text)]">SubForFlash</h3>
-            <p class="mt-1 text-xs uppercase tracking-[0.2em] text-cyan-500 font-black">Szerver admin</p>
-            <p class="mt-4 text-sm leading-relaxed text-[var(--text-soft)]">A közösség és a Discord felügyelete, hibajegyek és támogatás.</p>
+            <h3 class="mt-6 text-2xl font-black text-[var(--text)]">Afonya_Dev</h3>
+            <p class="mt-1 text-xs uppercase tracking-[0.2em] text-cyan-500 font-black">Admin</p>
+            <p class="mt-4 text-sm leading-relaxed text-[var(--text-soft)]">Közösségi támogatás, fejlesztés és a szerver közvetlen támogatása.</p>
           </article>
         </div>
       </section>
@@ -741,33 +573,19 @@
           <h2 class="mt-6 text-3xl sm:text-5xl font-black tracking-[-0.05em] text-[var(--text)]">Hivatalos <span class="gradient-text">platformjaink</span></h2>
         </div>
 
-        <div class="mt-12 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
-          <article class="section-shell card-hover rounded-[28px] p-6">
-            <div class="w-12 h-12 rounded-2xl bg-red-500/10 text-red-500 flex items-center justify-center mb-4"><i data-lucide="play" class="w-5 h-5"></i></div>
-            <h3 class="text-xl font-black text-[var(--text)]">YouTube</h3>
-            <p class="mt-3 text-sm text-[var(--text-soft)]">Friss videók, letöltések és érdekes tartalmak a közösségnek.</p>
-            <a href="#" class="mt-5 inline-flex items-center gap-2 text-sm font-bold text-red-500">Megtekintés <i data-lucide="arrow-up-right" class="w-4 h-4"></i></a>
-          </article>
-
-          <article class="section-shell card-hover rounded-[28px] p-6">
+        <div class="mt-12 max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
+          <article class="section-shell card-hover rounded-[28px] p-6 section-card">
             <div class="w-12 h-12 rounded-2xl bg-indigo-500/10 text-indigo-500 flex items-center justify-center mb-4"><i data-lucide="message-square" class="w-5 h-5"></i></div>
             <h3 class="text-xl font-black text-[var(--text)]">Discord</h3>
             <p class="mt-3 text-sm text-[var(--text-soft)]">Beszélgetés, hírek, segítség és közösségi események egy helyen.</p>
             <a href="https://discord.gg/DUVwTrQhS3" target="_blank" rel="noreferrer" class="mt-5 inline-flex items-center gap-2 text-sm font-bold text-indigo-500">Csatlakozás <i data-lucide="arrow-up-right" class="w-4 h-4"></i></a>
           </article>
 
-          <article class="section-shell card-hover rounded-[28px] p-6">
-            <div class="w-12 h-12 rounded-2xl bg-pink-500/10 text-pink-500 flex items-center justify-center mb-4"><i data-lucide="instagram" class="w-5 h-5"></i></div>
-            <h3 class="text-xl font-black text-[var(--text)]">Instagram</h3>
-            <p class="mt-3 text-sm text-[var(--text-soft)]">Közösségi fotók, projektek, események és napi élmények.</p>
-            <a href="#" class="mt-5 inline-flex items-center gap-2 text-sm font-bold text-pink-500">Követés <i data-lucide="arrow-up-right" class="w-4 h-4"></i></a>
-          </article>
-
-          <article class="section-shell card-hover rounded-[28px] p-6">
-            <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 text-emerald-500 flex items-center justify-center mb-4"><i data-lucide="globe" class="w-5 h-5"></i></div>
-            <h3 class="text-xl font-black text-[var(--text)]">Weboldal</h3>
-            <p class="mt-3 text-sm text-[var(--text-soft)]">Mindig naprakész információk, rangok, csomagok és szerver adatok.</p>
-            <a href="#hero" class="mt-5 inline-flex items-center gap-2 text-sm font-bold text-emerald-500">Főoldal <i data-lucide="arrow-up-right" class="w-4 h-4"></i></a>
+          <article class="section-shell card-hover rounded-[28px] p-6 section-card">
+            <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 text-emerald-500 flex items-center justify-center mb-4"><i data-lucide="badge-check" class="w-5 h-5"></i></div>
+            <h3 class="text-xl font-black text-[var(--text)]">Support Creator Code</h3>
+            <p class="mt-3 text-sm text-[var(--text-soft)]">Ha támogatni szeretnéd a szervert, használd a creator code-ot:</p>
+            <div class="mt-4 inline-flex items-center gap-2 rounded-full bg-emerald-500/10 border border-emerald-500/20 px-3 py-1.5 text-sm font-black text-emerald-600">Afonya_Dev</div>
           </article>
         </div>
       </section>
@@ -821,14 +639,7 @@
   </div>
 
   <script>
-    const themeMap = {
-      purple: 'purple',
-      green: 'green',
-      blue: 'blue',
-      red: 'red',
-      obsidian: 'obsidian'
-    };
-
+    const themeMap = { purple:'purple', green:'green', blue:'blue', red:'red', obsidian:'obsidian' };
     const cart = [];
     let audioEnabled = true;
 
@@ -837,39 +648,25 @@
       document.documentElement.setAttribute('data-theme', selected);
       localStorage.setItem('void-theme', selected);
     }
-
-    function openRulesModal() {
-      document.getElementById('rules-modal').classList.add('show');
-    }
-
-    function openAuthModal(mode = 'login') {
+    function openRulesModal() { document.getElementById('rules-modal').classList.add('show'); }
+    function openAuthModal(mode='login') {
       const modal = document.getElementById('auth-modal');
       const title = document.getElementById('auth-title');
       title.textContent = mode === 'login' ? 'Bejelentkezés' : 'Regisztráció';
       modal.classList.add('show');
     }
-
-    function closeModal(id) {
-      document.getElementById(id).classList.remove('show');
-    }
-
-    function openCartModal() {
-      renderCart();
-      document.getElementById('cart-modal').classList.add('show');
-    }
-
+    function closeModal(id) { document.getElementById(id).classList.remove('show'); }
+    function openCartModal() { renderCart(); document.getElementById('cart-modal').classList.add('show'); }
     function renderCart() {
       const itemsEl = document.getElementById('cart-items');
       const totalEl = document.getElementById('cart-total');
       const badgeEl = document.getElementById('cart-badge');
-
       if (!cart.length) {
         itemsEl.innerHTML = '<p class="text-sm">A kosár jelenleg üres.</p>';
         totalEl.textContent = '0 Ft';
         badgeEl.textContent = '0';
         return;
       }
-
       let total = 0;
       itemsEl.innerHTML = cart.map(item => {
         total += item.price;
@@ -883,11 +680,9 @@
           </div>
         `;
       }).join('');
-
       totalEl.textContent = `${total.toLocaleString('hu-HU')} Ft`;
       badgeEl.textContent = String(cart.length);
     }
-
     function addToCart(id, name, price, coins) {
       cart.push({ id, name, price, coins });
       renderCart();
@@ -896,7 +691,6 @@
       }
       openCartModal();
     }
-
     function toggleAudio() {
       audioEnabled = !audioEnabled;
       const button = document.getElementById('audio-toggle');
@@ -910,39 +704,28 @@
       }
       lucide.createIcons();
     }
-
     function scrollToSection(id) {
       const section = document.getElementById(id);
       if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
-
     function copyIpAddress() {
       const text = '212.73.137.207:40003';
       navigator.clipboard.writeText(text).then(() => {
         const toast = document.getElementById('toast-msg');
-        toast.classList.remove('opacity-0');
-        toast.classList.add('opacity-100');
+        toast.classList.remove('opacity-0'); toast.classList.add('opacity-100');
         setTimeout(() => {
-          toast.classList.add('opacity-0');
-          toast.classList.remove('opacity-100');
+          toast.classList.add('opacity-0'); toast.classList.remove('opacity-100');
         }, 1800);
-      }).catch(() => {
-        console.log('IP: ' + text);
-      });
+      }).catch(() => console.log('IP: ' + text));
     }
-
     function initTheme() {
       const saved = localStorage.getItem('void-theme');
-      if (saved && themeMap[saved]) {
-        setTheme(saved);
-      }
+      if (saved && themeMap[saved]) setTheme(saved);
     }
-
     function initParticles() {
       const canvas = document.getElementById('particles-canvas');
       const ctx = canvas.getContext('2d');
       let particles = [];
-
       function resize() {
         canvas.width = window.innerWidth * devicePixelRatio;
         canvas.height = window.innerHeight * devicePixelRatio;
@@ -950,7 +733,6 @@
         canvas.style.height = window.innerHeight + 'px';
         ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
       }
-
       function createParticle() {
         const accent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
         const secondary = getComputedStyle(document.documentElement).getPropertyValue('--secondary').trim();
@@ -963,73 +745,40 @@
           color: Math.random() > 0.5 ? accent : secondary,
         };
       }
-
-      function spawnParticles() {
-        particles = Array.from({ length: 60 }, createParticle);
-      }
-
+      function spawnParticles() { particles = Array.from({ length: 60 }, createParticle); }
       function render() {
         ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
         particles.forEach(p => {
-          p.x += p.vx;
-          p.y += p.vy;
+          p.x += p.vx; p.y += p.vy;
           if (p.x < 0 || p.x > window.innerWidth) p.vx *= -1;
           if (p.y < 0 || p.y > window.innerHeight) p.vy *= -1;
-
-          ctx.beginPath();
-          ctx.fillStyle = p.color;
-          ctx.shadowBlur = 12;
-          ctx.shadowColor = p.color;
-          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-          ctx.fill();
+          ctx.beginPath(); ctx.fillStyle = p.color; ctx.shadowBlur = 12; ctx.shadowColor = p.color; ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fill();
         });
-        ctx.shadowBlur = 0;
-        requestAnimationFrame(render);
+        ctx.shadowBlur = 0; requestAnimationFrame(render);
       }
-
-      window.addEventListener('resize', () => {
-        resize();
-        spawnParticles();
-      });
-
-      resize();
-      spawnParticles();
-      render();
+      window.addEventListener('resize', () => { resize(); spawnParticles(); });
+      resize(); spawnParticles(); render();
     }
-
     function initCursor() {
       const glow = document.querySelector('.cursor-glow');
       const dot = document.querySelector('.cursor-dot');
       window.addEventListener('pointermove', (event) => {
-        glow.style.left = event.clientX + 'px';
-        glow.style.top = event.clientY + 'px';
-        dot.style.left = event.clientX + 'px';
-        dot.style.top = event.clientY + 'px';
+        glow.style.left = event.clientX + 'px'; glow.style.top = event.clientY + 'px';
+        dot.style.left = event.clientX + 'px'; dot.style.top = event.clientY + 'px';
       });
       document.querySelectorAll('button, a, .card-hover, .soft-shell, .glass-button').forEach(el => {
-        el.addEventListener('pointerenter', () => {
-          dot.style.width = '18px';
-          dot.style.height = '18px';
-        });
-        el.addEventListener('pointerleave', () => {
-          dot.style.width = '12px';
-          dot.style.height = '12px';
-        });
+        el.addEventListener('pointerenter', () => { dot.style.width = '18px'; dot.style.height = '18px'; });
+        el.addEventListener('pointerleave', () => { dot.style.width = '12px'; dot.style.height = '12px'; });
       });
     }
-
     document.getElementById('menu-toggle')?.addEventListener('click', () => {
       const menu = document.getElementById('mobile-menu');
       menu.classList.toggle('open');
     });
-
     document.addEventListener('click', (event) => {
       const backdrop = event.target.closest('.modal-backdrop');
-      if (backdrop && event.target === backdrop) {
-        backdrop.classList.remove('show');
-      }
+      if (backdrop && event.target === backdrop) backdrop.classList.remove('show');
     });
-
     document.addEventListener('DOMContentLoaded', () => {
       initTheme();
       initParticles();
